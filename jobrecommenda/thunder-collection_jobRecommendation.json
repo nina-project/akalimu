@@ -1,0 +1,190 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "jobRecommendation",
+    "dateExported": "2023-06-10T19:23:44.414Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "ddc68fda-89a5-4b7b-9d9b-5ae0bbb4c8f3",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "login",
+            "url": "localhost:8000/api/v1/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-06-08T16:10:31.155Z",
+            "modified": "2023-06-08T17:01:48.339Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"test2@kill.com\",\n  \"password\": \"password\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "93ed5e76-b6c8-4f04-899c-47fc1b1bf091",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "register",
+            "url": "localhost:8000/api/v1/register",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-06-08T16:10:40.701Z",
+            "modified": "2023-06-10T18:39:04.549Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\" : \"BOSSA VICENT\",\n  \"email\": \"bossman2@gmail.com\",\n  \"password\": \"pass1234\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "d789c06c-a628-49ca-8283-132822eb01dd",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "jobs",
+            "url": "localhost:8000/api/v1/jobs",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-06-08T17:02:29.285Z",
+            "modified": "2023-06-10T19:05:48.249Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDIzOTE1LCJleHAiOjE2ODY0Mjc1MTUsIm5iZiI6MTY4NjQyMzkxNSwianRpIjoiMFpmaHdCeEFpUEZES1VPWCIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.csiz39cGVjt9vH1vtprPbmEBI7ke_4yQB_Qkv6WfSmM"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "68eb04a1-9570-4876-81bd-a9b314167e3c",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "recommendations",
+            "url": "localhost:8000/api/v1/jobs/recommended",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-06-08T17:02:52.048Z",
+            "modified": "2023-06-08T18:45:18.073Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e9af97d1-92d2-44ac-8e52-9446eee04490",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "create categories",
+            "url": "localhost:8000/api/v1/categories",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-06-08T17:04:23.451Z",
+            "modified": "2023-06-10T18:26:01.145Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDE5NzY2LCJleHAiOjE2ODY0MjMzNjYsIm5iZiI6MTY4NjQxOTc2NiwianRpIjoibURUMlJCRjRseEZWR2VWYiIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.M_1NhQdnIHDHNLCwqaTTNcHdjlzDSdbeWjuQtv0jVW0"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"Shamisra\"\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "14b87f8c-b1f3-44cf-8de7-1fd4fdf9009b",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "categories",
+            "url": "localhost:8000/api/v1/categories",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-06-10T17:54:23.921Z",
+            "modified": "2023-06-10T17:56:55.155Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDE5NzY2LCJleHAiOjE2ODY0MjMzNjYsIm5iZiI6MTY4NjQxOTc2NiwianRpIjoibURUMlJCRjRseEZWR2VWYiIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.M_1NhQdnIHDHNLCwqaTTNcHdjlzDSdbeWjuQtv0jVW0"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d440e6c5-bd9b-40cd-80f0-d93eda819d06",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "create job",
+            "url": "localhost:8000/api/v1/jobs",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-06-10T18:52:10.123Z",
+            "modified": "2023-06-10T19:20:14.786Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDI0Nzc1LCJleHAiOjE2ODY0MjgzNzUsIm5iZiI6MTY4NjQyNDc3NSwianRpIjoiV2d1V2xBMEdMWDQ3VGpyVyIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vobddsouZuU-1R54saZcTIyeLQEq8w8IoM6AehUjqlw"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"House cleaning\",\n  \"category_id\": 3,\n  \"description\": \"hello clean  my house i am off\",\n  \"location\": \"Bwaise Kampala\",\n  \"wage\": 20000,\n  \"posted_by\"\n  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "1ea846bd-ff80-4e23-a1bf-1a6ea6077406",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "delete job",
+            "url": "localhost:8000/api/v1/jobs/1",
+            "method": "DELETE",
+            "sortNum": 80000,
+            "created": "2023-06-10T19:02:50.812Z",
+            "modified": "2023-06-10T19:09:34.275Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDIzOTE1LCJleHAiOjE2ODY0Mjc1MTUsIm5iZiI6MTY4NjQyMzkxNSwianRpIjoiMFpmaHdCeEFpUEZES1VPWCIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.csiz39cGVjt9vH1vtprPbmEBI7ke_4yQB_Qkv6WfSmM"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "4114217b-e27c-480d-a847-f094febd3e08",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "update job",
+            "url": "localhost:8000/api/v1/jobs/2",
+            "method": "PATCH",
+            "sortNum": 90000,
+            "created": "2023-06-10T19:11:13.237Z",
+            "modified": "2023-06-10T19:19:56.627Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDI0Nzc1LCJleHAiOjE2ODY0MjgzNzUsIm5iZiI6MTY4NjQyNDc3NSwianRpIjoiV2d1V2xBMEdMWDQ3VGpyVyIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vobddsouZuU-1R54saZcTIyeLQEq8w8IoM6AehUjqlw"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Car washing\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

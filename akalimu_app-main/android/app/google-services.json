@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "727663850416",
+    "project_id": "akalimuproject",
+    "storage_bucket": "akalimuproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727663850416:android:082f79eab8aea530879c75",
+        "android_client_info": {
+          "package_name": "com.example.akalimu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727663850416-e2tmgosl8qlprjdemnq0bkt6s2amjmja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJPKOtve_BCUlRiw2BYLir1f_l7yfPuR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727663850416-e2tmgosl8qlprjdemnq0bkt6s2amjmja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
