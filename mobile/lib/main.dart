@@ -41,7 +41,6 @@ void main() {
 }
 
 
-
 // import 'package:flutter/material.dart';
 // import 'package:location/location.dart';
 
@@ -132,6 +131,3 @@ void main() {
 //     );
 //   }
 // }
-
-
-// XAMPP/xamppfiles/bin/mysql -u root -h localhost

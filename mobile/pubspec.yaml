@@ -43,7 +43,7 @@ dependencies:
   google_sign_in: ^6.1.0
   image_picker: ^0.8.7+5
   http: ^0.13.6
-  flutterwave: ^1.0.3
+  # flutterwave: ^1.0.3
 
 dev_dependencies:
   flutter_test:
