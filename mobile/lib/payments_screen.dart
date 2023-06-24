@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:akalimu/maindrawerscreen.dart';
+import 'package:akalimu/screens/main/maindrawerscreen.dart';
 import 'package:akalimu/ratingscreen.dart';
 
 class Payments extends StatefulWidget {

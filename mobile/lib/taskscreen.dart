@@ -298,115 +298,54 @@
 //   }
 // }
 
+import 'package:akalimu/data/models/job.dart';
+import 'package:akalimu/data/providers/app_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TaskPage extends StatefulWidget {
+class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
-
-  @override
-  State<TaskPage> createState() => _TaskPageState();
-}
-
-class _TaskPageState extends State<TaskPage> {
-  List<TaskItem> taskItems = [
-    TaskItem(
-      categoryIcon: Icons.shopping_bag,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Delivery',
-      description: 'I need a personal assistant to send my package to Nansana',
-    ),
-    TaskItem(
-      categoryIcon: Icons.cleaning_services,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Cleaning',
-      description: 'I need someone to clean my apartment on weekends',
-    ),
-    TaskItem(
-      categoryIcon: Icons.shopping_cart,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Shopping',
-      description: 'I need someone to buy groceries for me',
-    ),
-    TaskItem(
-      categoryIcon: Icons.shopping_bag,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Delivery',
-      description: 'I need a personal assistant to send my package to Nansana',
-    ),
-    TaskItem(
-      categoryIcon: Icons.cleaning_services,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Cleaning',
-      description: 'I need someone to clean my apartment on weekends',
-    ),
-    TaskItem(
-      categoryIcon: Icons.shopping_cart,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Shopping',
-      description: 'I need someone to buy groceries for me',
-    ),
-    TaskItem(
-      categoryIcon: Icons.shopping_bag,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Delivery',
-      description: 'I need a personal assistant to send my package to Nansana',
-    ),
-    TaskItem(
-      categoryIcon: Icons.cleaning_services,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Cleaning',
-      description: 'I need someone to clean my apartment on weekends',
-    ),
-    TaskItem(
-      categoryIcon: Icons.shopping_cart,
-      categoryColor: const Color(0xFF163a96),
-      category: 'Shopping',
-      description: 'I need someone to buy groceries for me',
-    ),
-    // Add more task items here
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                color: Colors.grey[300],
+      body: Consumer<AppProvider>(
+        builder: (context, appProvider, _) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.grey[300],
+                  ),
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: taskItems.length,
-              itemBuilder: (context, index) {
-                TaskItem taskItem = taskItems[index];
-                return buildTaskCard(
-                  categoryIcon: taskItem.categoryIcon,
-                  categoryColor: taskItem.categoryColor,
-                  category: taskItem.category,
-                  description: taskItem.description,
-                  //price: taskItem.price,
-                );
-              },
-            ),
-          ),
-        ],
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: appProvider.jobs.length,
+                  itemBuilder: (context, index) {
+                    Job job = appProvider.jobs[index];
+                    return JobCard(job: job);
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
+}
 
-  Widget buildTaskCard({
-    required IconData categoryIcon,
-    required Color categoryColor,
-    required String category,
-    required String description,
-  }) {
+class JobCard extends StatelessWidget {
+  final Job job;
+  const JobCard({super.key, required this.job});
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       elevation: 2.0,
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -414,32 +353,18 @@ class _TaskPageState extends State<TaskPage> {
         leading: Container(
           width: 48.0,
           height: 48.0,
-          decoration: BoxDecoration(
-            color: categoryColor,
+          decoration: const BoxDecoration(
+            color: Color(0xFF163a96),
             shape: BoxShape.circle,
           ),
-          child: Icon(
-            categoryIcon,
+          child: const Icon(
+            Icons.shopping_bag,
             color: Colors.white,
           ),
         ),
-        title: Text(category),
-        subtitle: Text(description),
+        title: Text(job.title),
+        subtitle: Text(job.description),
       ),
     );
   }
-}
-
-class TaskItem {
-  final IconData categoryIcon;
-  final Color categoryColor;
-  final String category;
-  final String description;
-
-  TaskItem({
-    required this.categoryIcon,
-    required this.categoryColor,
-    required this.category,
-    required this.description,
-  });
 }

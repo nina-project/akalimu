@@ -1,13 +1,13 @@
 //REQUIRED
 
+//import 'package:provider/provider.dart';
+import 'package:akalimu/screens/main/mainappscreen.dart';
+import 'package:flutter/material.dart';
 //import 'dart:html';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
-import 'package:akalimu/mainappscreen.dart';
+import 'data/providers/app_provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -18,124 +18,120 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   //final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? user = FirebaseAuth.instance.currentUser;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  // User? user = FirebaseAuth.instance.currentUser;
+  // CollectionReference users = FirebaseFirestore.instance.collection('users');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: StreamBuilder<DocumentSnapshot>(
-            stream: users.doc(user!.uid).snapshots(),
-            builder: (ctx, streamSnapshot) {
-              if (streamSnapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Color(0xFF163a96),
+        body: Consumer<AppProvider>(builder: (context, appProvider, _) {
+      if (appProvider.isLoading) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF163a96),
+          ),
+        );
+      }
+      return Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: const Color(0xFF163a96),
+          leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const MainPage()));
+              }),
+        ),
+        body: Stack(
+          alignment: Alignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 350,
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        (appProvider.userData?.name).toString(),
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      Text((appProvider.userData?.email).toString(),
+                          style: const TextStyle(fontSize: 20)),
+                      Text((appProvider.userData?.phoneNumber).toString(),
+                          style: const TextStyle(fontSize: 20)),
+                      const SizedBox(
+                        height: 55,
+                        width: double.infinity,
+                      )
+                    ],
                   ),
-                );
-              }
-              return Scaffold(
-                appBar: AppBar(
-                  elevation: 0.0,
-                  backgroundColor: const Color(0xFF163a96),
-                  leading: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const MainPage()));
-                      }),
+                )
+              ],
+            ),
+            CustomPaint(
+              painter: HeaderCurvedContainer(),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    "Profile",
+                    style: TextStyle(
+                      fontSize: 35,
+                      letterSpacing: 1.5,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-                body: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          height: 350,
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                (user?.displayName).toString(),
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              Text((user?.email).toString(),
-                                  style: const TextStyle(fontSize: 20)),
-                              Text((user?.phoneNumber).toString(),
-                                  style: const TextStyle(fontSize: 20)),
-                              Container(
-                                height: 55,
-                                width: double.infinity,
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: MediaQuery.of(context).size.width / 2,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white, width: 5),
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/logo.png'),
                     ),
-                    CustomPaint(
-                      painter: HeaderCurvedContainer(),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                            "Profile",
-                            style: TextStyle(
-                              fontSize: 35,
-                              letterSpacing: 1.5,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          width: MediaQuery.of(context).size.width / 2,
-                          height: MediaQuery.of(context).size.width / 2,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 5),
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('images/profile.png'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 270, left: 184),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.black,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            _pickImageFromGallery;
-                          },
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              );
-            }));
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 270, left: 184),
+              child: CircleAvatar(
+                backgroundColor: Colors.black,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    _pickImageFromGallery;
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }));
   }
 }
 

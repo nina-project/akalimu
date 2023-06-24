@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-import 'package:akalimu/mainappscreen.dart';
-import 'package:akalimu/maindrawerscreen.dart';
+import 'package:akalimu/screens/main/mainappscreen.dart';
+import 'package:akalimu/screens/main/maindrawerscreen.dart';
 
 class Rating extends StatefulWidget {
   const Rating({super.key});

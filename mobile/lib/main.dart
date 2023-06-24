@@ -1,26 +1,31 @@
 //import 'package:akalimu/recommendationscreen.dart';
 //import 'package:firebase_core/firebase_core.dart';
-import 'package:akalimu/flutterwavepayment.dart';
-import 'package:akalimu/payments_screen.dart';
-import 'package:flutter/material.dart';
 //import 'package:akalimu/accountscreen.dart';
 //import 'package:akalimu/categoryscreen.dart';
 //import 'package:akalimu/futurebuilderdemo.dart';
-import 'package:akalimu/home_page_route_screen.dart';
+import 'package:akalimu/data/local_preferences.dart';
+import 'package:akalimu/data/providers/app_provider.dart';
 //import 'package:akalimu/jobrequirementscreen.dart';
-import 'package:akalimu/main_ui_controller.dart';
-import 'package:akalimu/mainappscreen.dart';
+import 'package:akalimu/screens/main/main_ui_controller.dart';
+import 'package:akalimu/screens/main/mainappscreen.dart';
 //import 'package:akalimu/maps.dart';
 //import 'package:akalimu/posttaskscreen.dart';
 //import 'package:akalimu/prac.dart';
-import 'package:akalimu/register_view.dart';
+import 'package:akalimu/screens/auth/register_view.dart';
 //.import 'package:akalimu/taskscreen.dart';
 import 'package:akalimu/verify_email_view.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'login_view_screen.dart';
+import 'screens/auth/login_view_screen.dart';
 import 'routes.dart';
+import 'screens/main/home_page_route_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalPreferences().init();
+
   //WidgetsFlutterBinding.ensureInitialized();
   //Firebase.initializeApp();
   // runApp(const HelloRectangle());
@@ -28,7 +33,16 @@ void main() {
   runApp(
     MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const Payments(),
+        home: const HomePageRoute(),
+        builder: (_, home) => MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) => AppProvider(),
+                  lazy: false,
+                ),
+              ],
+              child: home,
+            ),
         routes: {
           loginRoute: (context) => const LoginPage(),
           registerRoute: (context) => const RegisterPage(),

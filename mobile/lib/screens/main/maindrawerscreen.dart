@@ -1,18 +1,15 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-//import 'package:akalimu/main_ui_controller.dart';
-//import 'package:gighub/auth_service.dart';
-//import 'package:gighub/profile_user.dart';
-//import 'package:provider/provider.dart';
-import 'package:akalimu/payments_screen.dart';
 import 'package:akalimu/profilescreen.dart';
+import 'package:akalimu/routes.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'aboutscreen.dart';
-import 'helpscreen.dart';
+import '../../aboutscreen.dart';
+import '../../data/providers/app_provider.dart';
+import '../../helpscreen.dart';
 
 class MainDrawer extends StatefulWidget {
   final String userImage;
@@ -23,7 +20,7 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  User? user = FirebaseAuth.instance.currentUser;
+  // User? user = FirebaseAuth.instance.currentUser;
   String? _ref;
   String amount = '10000';
   void setRef() {
@@ -51,11 +48,9 @@ class _MainDrawerState extends State<MainDrawer> {
   //     IconData(0xe699, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
-    // final authService = Provider.of<AuthService>(context);
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-    return StreamBuilder<DocumentSnapshot>(
-      stream: users.doc(user!.uid).snapshots(),
-      builder: (ctx, streamSnapshot) {
+    double profilePictureSize = 80;
+    return Consumer<AppProvider>(
+      builder: (context, appProvider, _) {
         return Drawer(
           child: Column(
             children: [
@@ -67,39 +62,41 @@ class _MainDrawerState extends State<MainDrawer> {
                   child: Column(
                     children: [
                       Container(
-                        width: 100,
-                        height: 100,
+                        width: profilePictureSize,
+                        height: profilePictureSize,
                         margin: const EdgeInsets.only(
                           top: 30,
                         ),
                         child: CircleAvatar(
                           radius: 40.0,
                           child: ClipOval(
-                            child: Image.network(
-                              (user?.photoURL).toString(),
-                            ),
+                            child: Icon(Icons.person_3_rounded,
+                                size: profilePictureSize - 10,
+                                color: Colors.white),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                        child: Row(children: [
-                          Text(
-                            (user?.displayName).toString(),
-                            style: const TextStyle(
-                              fontSize: 22,
-                              color: Colors.white,
-                            ),
-                          ),
-                          // Text(streamSnapshot.data!['lastname'],
-                          //     style: const TextStyle(fontSize: 22)),
-                          IconButton(
-                            onPressed: () {},
-                            icon: new Icon(Icons.verified),
-                            color: Colors.white,
-                            //highlightColor: Colors.white,
-                          ),
-                        ]),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                (appProvider.userData?.name).toString(),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              // Text(streamSnapshot.data!['lastname'],
+                              //     style: const TextStyle(fontSize: 22)),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.verified),
+                                color: Colors.white,
+                                //highlightColor: Colors.white,
+                              ),
+                            ]),
                       ),
                       // Text(
                       //   (user?.phoneNumber).toString(),
@@ -133,7 +130,9 @@ class _MainDrawerState extends State<MainDrawer> {
                 leading: const Icon(Icons.payment, color: Color(0xFF163a96)),
                 title: TextButton(
                   onPressed: () {
-                    _makePayment(context, ((user?.email).toString()).trim(),
+                    _makePayment(
+                        context,
+                        ((appProvider.userData?.email).toString()).trim(),
                         amount.trim());
                     // Navigator.pushReplacement(
                     //     context,
@@ -242,10 +241,24 @@ Future<bool> showDialogBox(context) {
           actions: [
             TextButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil("/homepage/", (route) => false);
-                print("true");
+                // FirebaseAuth.instance.signOut();
+                // Navigator.of(context)
+                //     .pushNamedAndRemoveUntil("/homepage/", (route) => false);
+                // print("true");
+                try {
+                  AppProvider appProvider =
+                      Provider.of<AppProvider>(context, listen: false);
+                  appProvider.signOutUser().then((value) {
+                    if (value) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          homePageRoute, (route) => false);
+                    }
+                  });
+                } catch (e) {
+                  if (kDebugMode) {
+                    print(e);
+                  }
+                }
               },
               child: const Text(
                 "Yes",

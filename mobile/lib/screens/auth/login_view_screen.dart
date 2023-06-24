@@ -81,8 +81,10 @@
 import 'dart:developer';
 
 import 'package:akalimu/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/providers/app_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -116,17 +118,17 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [ 
+          children: [
             Row(children: [
               Expanded(
                 child: TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(registerRoute, (route) => false);
-                },
-                child: const Text("Have no account? Sign Up"),
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        registerRoute, (route) => false);
+                  },
+                  child: const Text("Have no account? Sign Up"),
                 ),
-                ),
+              ),
               Expanded(
                 child: Align(
                   alignment: Alignment.topRight,
@@ -138,24 +140,24 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ]),
-            SizedBox(height: 20.0),        
+            const SizedBox(height: 20.0),
             TextField(
-              decoration:  InputDecoration(
+              decoration: InputDecoration(
                 labelText: "Email address",
-               border: OutlineInputBorder(
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
-              ),
+            ),
             const SizedBox(
               height: 20.0,
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             TextField(
               controller: _passwordController,
-              decoration:  InputDecoration(
+              decoration: InputDecoration(
                 labelText: "Password",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -170,28 +172,42 @@ class _LoginPageState extends State<LoginPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
+                  // try {
+                  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  //     email: _emailController.text,
+                  //     password: _passwordController.text,
+                  //   );
+                  //   Navigator.of(context).pushNamedAndRemoveUntil(
+                  //     "/mainpage/",
+                  //     (route) => false,
+                  //   );
+                  // } on FirebaseAuthException catch (e) {
+                  //   log(e.code.toString());
+                  // }
                   try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    );
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      "/mainpage/",
-                      (route) => false,
-                    );
-                  } on FirebaseAuthException catch (e) {
-                    log(e.code.toString());
+                    AppProvider appProvider =
+                        Provider.of<AppProvider>(context, listen: false);
+                    await appProvider
+                        .loginUser(
+                            _emailController.text, _passwordController.text)
+                        .then((createdUser) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          homePageRoute, (route) => false);
+                    });
+                  } catch (e) {
+                    log(e.toString());
                   }
                 },
-                child: const Text("Login"),
                 style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                minimumSize: Size(500, 40),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-                backgroundColor: Color(0xFF163a96),
-              ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  minimumSize: const Size(500, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  backgroundColor: const Color(0xFF163a96),
+                ),
+                child: const Text("Login"),
               ),
             )
           ],
