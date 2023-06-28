@@ -16,7 +16,7 @@ class HomePageRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserData? userData = LocalPreferences().userData;
     if (userData != null) {
-      // log(userData.toString());
+      log(userData.toString());
       return const MainPage();
     } else {
       return const RegisterPage();

@@ -71,7 +71,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           radius: 40.0,
                           child: ClipOval(
                             child: Icon(Icons.person_3_rounded,
-                                size: profilePictureSize - 10,
+                                size: profilePictureSize - 30,
                                 color: Colors.white),
                           ),
                         ),

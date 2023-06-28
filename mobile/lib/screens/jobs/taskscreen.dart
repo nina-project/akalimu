@@ -300,6 +300,7 @@
 
 import 'package:akalimu/data/models/job.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
+import 'package:akalimu/screens/jobs/job_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -346,24 +347,42 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: ListTile(
-        leading: Container(
-          width: 48.0,
-          height: 48.0,
-          decoration: const BoxDecoration(
-            color: Color(0xFF163a96),
-            shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(JobDetailsScreen.routeName, arguments: job.id);
+      },
+      child: Card(
+        elevation: 2.0,
+        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: ListTile(
+          leading: Container(
+            width: 48.0,
+            height: 48.0,
+            decoration: const BoxDecoration(
+              color: Color(0xFF163a96),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.shopping_bag,
+              color: Colors.white,
+            ),
           ),
-          child: const Icon(
-            Icons.shopping_bag,
-            color: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              job.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(),
+            ),
+          ),
+          subtitle: Text(
+            job.description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        title: Text(job.title),
-        subtitle: Text(job.description),
       ),
     );
   }

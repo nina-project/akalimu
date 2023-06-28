@@ -156,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   );
                   AppProvider appProvider =
                       Provider.of<AppProvider>(context, listen: false);
-                  await appProvider.registerUser(userData).then((createdUser) {
+                  await appProvider.registerUser(userData).then((_) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         homePageRoute, (route) => false);
                   });

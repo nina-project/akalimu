@@ -5,20 +5,22 @@
 //import 'package:akalimu/futurebuilderdemo.dart';
 import 'package:akalimu/data/local_preferences.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
-//import 'package:akalimu/jobrequirementscreen.dart';
-import 'package:akalimu/screens/main/main_ui_controller.dart';
-import 'package:akalimu/screens/main/mainappscreen.dart';
 //import 'package:akalimu/maps.dart';
 //import 'package:akalimu/posttaskscreen.dart';
 //import 'package:akalimu/prac.dart';
 import 'package:akalimu/screens/auth/register_view.dart';
+import 'package:akalimu/screens/clients/client_screen.dart';
+import 'package:akalimu/screens/jobs/job_details_screen.dart';
+//import 'package:akalimu/jobrequirementscreen.dart';
+import 'package:akalimu/screens/main/main_ui_controller.dart';
+import 'package:akalimu/screens/main/mainappscreen.dart';
 //.import 'package:akalimu/taskscreen.dart';
 import 'package:akalimu/verify_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/auth/login_view_screen.dart';
 import 'routes.dart';
+import 'screens/auth/login_view_screen.dart';
 import 'screens/main/home_page_route_screen.dart';
 
 Future<void> main() async {
@@ -50,6 +52,8 @@ Future<void> main() async {
           mainUiRoute: (context) => const MainUi(),
           mainPageRoute: (context) => const MainPage(),
           homePageRoute: (context) => const HomePageRoute(),
+          JobDetailsScreen.routeName: (context) => const JobDetailsScreen(),
+          ClientScreen.routeName: (context) => const ClientScreen(),
         }),
   );
 }

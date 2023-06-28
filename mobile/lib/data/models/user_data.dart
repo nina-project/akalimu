@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:akalimu/data/models/client.dart';
+
 class UserData {
   final int? id;
   final String name;
@@ -89,3 +91,18 @@ class UserData {
         accessToken.hashCode;
   }
 }
+
+//generate UserData object from client object
+UserData _userDataFromClient(Client client) => UserData(
+      id: client.id,
+      name: client.name,
+      email: client.email,
+      password: "",
+      phoneNumber: client.phoneNumber,
+    );
+
+List<UserData> usersFromJson(String str) =>
+    List<UserData>.from(json.decode(str)['data'].map((x) {
+      Client dbUserData = Client.fromMap(x as Map<String, dynamic>);
+      return _userDataFromClient(dbUserData);
+    }).toList());

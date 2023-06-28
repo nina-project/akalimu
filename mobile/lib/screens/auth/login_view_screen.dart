@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                     await appProvider
                         .loginUser(
                             _emailController.text, _passwordController.text)
-                        .then((createdUser) {
+                        .then((_) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           homePageRoute, (route) => false);
                     });

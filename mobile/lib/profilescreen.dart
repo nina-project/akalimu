@@ -34,6 +34,15 @@ class _ProfileState extends State<Profile> {
       return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
+          title: const Text(
+            "Profile",
+            style: TextStyle(
+              fontSize: 20,
+              letterSpacing: 1.5,
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           backgroundColor: const Color(0xFF163a96),
           leading: IconButton(
               icon: const Icon(
@@ -88,9 +97,9 @@ class _ProfileState extends State<Profile> {
                 const Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                    "Profile",
+                    " ",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 20,
                       letterSpacing: 1.5,
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

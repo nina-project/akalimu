@@ -3,28 +3,28 @@ import 'dart:convert';
 
 class Job {
   Job({
+    this.id,
     required this.city,
     required this.country,
-    required this.createdAt,
     required this.description,
-    required this.id,
     required this.postedBy,
     required this.salary,
     required this.slug,
     required this.title,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
+  final int? id;
   final String city;
   final String country;
-  final DateTime createdAt;
   final String description;
-  final int id;
   final int postedBy;
   final String salary;
   final String slug;
   final String title;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   Job copyWith({
     String? city,
@@ -56,14 +56,14 @@ class Job {
     return <String, dynamic>{
       'city': city,
       'country': country,
-      'created_at': createdAt.toIso8601String(),
+      'created_at': createdAt?.toIso8601String(),
       'description': description,
       'id': id,
       'posted_by': postedBy,
       'salary': salary,
       'slug': slug,
       'title': title,
-      'updated_at': updatedAt.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
     };
   }
 

@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 import 'package:akalimu/data/models/user_data.dart';
+import 'package:http/http.dart' as http;
 
+import '../query_params.dart';
 import 'api.dart';
 
 class AuthAPI {
@@ -37,13 +38,31 @@ class AuthAPI {
     }
   }
 
-  // Future<UserData?> getUserData(String email) async {
-  //   try {
-  //     // http.Response response =
-  //     //     await getFromEndpoint("$usersAPIEndpoint/$id");
-  //     return UserData.fromJson(jsonDecode(response.body));
-  //   } catch (e) {
-  //     return Future.error(e);
-  //   }
-  // }
+  Future<List<UserData>> getAll(QueryParams params) async {
+    try {
+      http.Response response =
+          await getFromEndpoint(usersAPIEndpoint, params: params);
+      if (response.statusCode == 200) {
+        return usersFromJson(response.body);
+      } else {
+        return Future.error('Failed to load Users from API');
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<UserData?> getUserData(String? email) async {
+    //this is temporary logic to get user data. it needs to be redone wth proper way after back end is fixed. and search feature added.
+    //that way, we can search the db for a user with the email, instead of getting all users and filtering them.
+    try {
+      List<UserData> allUserData =
+          await getAll(UsersQueryParams(filter: ClientsQueryParams.filterAll));
+      UserData? userData =
+          allUserData.firstWhere((element) => element.email == email);
+      return userData;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }
