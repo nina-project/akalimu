@@ -7,6 +7,7 @@ import 'package:akalimu/data/query_params.dart';
 import 'package:flutter/material.dart';
 
 import '../api/clients_api.dart';
+import '../models/category.dart';
 import '../models/user_data.dart';
 
 class AppProvider extends ChangeNotifier {
@@ -15,8 +16,8 @@ class AppProvider extends ChangeNotifier {
 
   List<Job> _jobs = [];
   List<Job> get jobs => _jobs;
-  List<String> _categories = [];
-  List<String> get categories => _categories;
+  List<Category> _categories = [];
+  List<Category> get categories => _categories;
 
   List<Client> _workers = [];
   List<Client> get workers => _workers;
@@ -107,6 +108,7 @@ class AppProvider extends ChangeNotifier {
           .getAll(JobsQueryParams(filter: JobsQueryParams.filterAll));
     } catch (e) {
       _error = e.toString();
+      print(e);
     }
     _isLoading = false;
     notifyListeners();

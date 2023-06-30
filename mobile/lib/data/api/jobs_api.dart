@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../models/category.dart';
 import '../models/job.dart';
 import '../query_params.dart';
 import 'api.dart';
@@ -43,7 +44,7 @@ class JobsAPI {
       http.Response response =
           await postToEndpoint(jobsAPIEndpoint, value.toMap());
       Map<String, dynamic> json = jsonDecode(response.body);
-      return Job.fromJson(json["data"]);
+      return Job.fromMap(json["data"]);
     } catch (e) {
       return Future.error(e);
     }
@@ -53,7 +54,7 @@ class JobsAPI {
     await deleteFromEndpoint("$jobsAPIEndpoint/${value.id}");
   }
 
-  Future<List<String>> fetchCategories() async {
+  Future<List<Category>> fetchCategories() async {
     try {
       http.Response response = await getFromEndpoint(categoriesAPIEndpoint);
       if (response.statusCode == 200) {
@@ -61,9 +62,9 @@ class JobsAPI {
         final jsonResponse = json.decode(source);
         final List<dynamic> categoriesList =
             jsonResponse['data'] as List<dynamic>;
-        return categoriesList
-            .map((categoryJson) => categoryJson['name'] as String)
-            .toList();
+        return categoriesList.map((categoryMap) {
+          return Category.fromMap(categoryMap as Map<String, dynamic>);
+        }).toList();
       } else {
         return Future.error('Failed to load categories from API');
       }

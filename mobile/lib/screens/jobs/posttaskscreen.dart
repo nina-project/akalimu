@@ -1,8 +1,8 @@
 //ignore_for_file: prefer_const_constructors
 
+import 'package:akalimu/data/models/category.dart';
 import 'package:akalimu/data/models/job.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
-import 'package:akalimu/routes.dart';
 import 'package:akalimu/screens/jobs/job_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ class PostTaskPage extends StatefulWidget {
 }
 
 class _PostTaskPageState extends State<PostTaskPage> {
-  String? categoryValue;
+  Category? categoryValue;
   String? locationValue;
   bool isRemote = false;
 
@@ -51,7 +51,7 @@ class _PostTaskPageState extends State<PostTaskPage> {
                 padding: const EdgeInsets.all(20.0),
                 child: Consumer<AppProvider>(
                   builder: (context, appProvider, _) {
-                    List<String> categories = appProvider.categories;
+                    List<Category> categories = appProvider.categories;
 
                     return Form(
                       key: _formKey,
@@ -90,7 +90,7 @@ class _PostTaskPageState extends State<PostTaskPage> {
                             ),
                           ),
                           const SizedBox(height: 10.0),
-                          DropdownButtonFormField<String>(
+                          DropdownButtonFormField<Category>(
                             decoration: const InputDecoration(
                               labelText: 'Category',
                               enabledBorder: OutlineInputBorder(),
@@ -106,7 +106,7 @@ class _PostTaskPageState extends State<PostTaskPage> {
                               });
                             },
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
+                              if (value == null) {
                                 return 'Please select category';
                               }
                               return null;
@@ -115,7 +115,7 @@ class _PostTaskPageState extends State<PostTaskPage> {
                                 .map(
                                   (e) => DropdownMenuItem(
                                     value: e,
-                                    child: Text(e),
+                                    child: Text(e.name),
                                   ),
                                 )
                                 .toList(),
@@ -275,20 +275,19 @@ class _PostTaskPageState extends State<PostTaskPage> {
     if (_formKey.currentState!.validate()) {
       Job job = Job(
         title: _titleController.text,
-        // category: categoryValue,
+        categories: categoryValue != null ? [categoryValue!] : [],
         description: _descriptionController.text,
-        city: _locationController.text,
-        salary: _salaryController.text,
-        country: "Uganda",
+        location: _locationController.text,
+        wage: int.parse(_salaryController.text),
         createdAt: DateTime.now(),
         postedBy: appProvider.userData?.id ?? 1,
-        slug: 'xyz',
       );
 
       appProvider.createJob(job).then((value) {
         if (value.id != null) {
           _formKey.currentState!.reset();
-          Navigator.of(context).pushNamed(JobDetailsScreen.routeName, arguments: value.id);
+          Navigator.of(context)
+              .pushNamed(JobDetailsScreen.routeName, arguments: value.id);
         }
       });
     }

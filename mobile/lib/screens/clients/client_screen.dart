@@ -34,7 +34,7 @@ class _ClientScreenState extends State<ClientScreen> {
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: const Color(0xFF163a96),
-        title: const Text('Job Details'),
+        title: const Text('User Details'),
       ),
       body: Consumer<AppProvider>(
         builder: (context, appProvider, _) {

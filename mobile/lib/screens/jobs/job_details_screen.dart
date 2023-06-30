@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/providers/app_provider.dart';
+import '../clients/client_screen.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   static const String routeName = '/job-details';
@@ -62,7 +63,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       color: Colors.grey.withOpacity(0.6),
                     ),
                     const SizedBox(width: 5),
-                    Text(appProvider.selectedJob?.city ?? "_"),
+                    Text(appProvider.selectedJob?.location ?? "_"),
                   ],
                 ),
               ),
@@ -119,7 +120,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              "UGX ${appProvider.selectedJob?.salary ?? "0"}",
+                              "UGX ${appProvider.selectedJob?.wage ?? "0"}",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
@@ -138,21 +139,31 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    child: Icon(Icons.person_2_rounded),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(ClientScreen.routeName,
+                      arguments: appProvider.selectedClient?.id);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Row(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CircleAvatar(
+                        child: Icon(Icons.person_2_rounded),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        appProvider.selectedClient?.name ?? "",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    appProvider.selectedClient?.name ?? "",
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                ],
+                ),
               ),
               const Divider(),
               const SizedBox(
@@ -173,7 +184,14 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          "Successfully applied for the job, We shall update you!"),
+                    ),
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
@@ -184,7 +202,14 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 ),
               ),
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          "Thank you for your feedback, Job removed from your recommendations"),
+                    ),
+                  );
+                },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red,
                 ),

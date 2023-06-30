@@ -60,9 +60,9 @@ Future<http.Response> postToEndpoint(
     body: jsonEncode(object),
   );
 
-  if (kDebugMode) {
-    print("_\nPOST:$endpoint RESPONSE:::\n ${response.body}");
-  }
+  // if (kDebugMode) {
+  //   print("_\nPOST:$endpoint RESPONSE:::\n ${response.body}");
+  // }
 
   if (response.statusCode == 200 || response.statusCode == 201) {
     return response;
@@ -80,9 +80,9 @@ Future<http.Response> putToEndpoint(String endpoint, dynamic object) async {
     body: jsonEncode(object),
   );
 
-  if (kDebugMode) {
-    print("_\nPUT:$endpoint RESPONSE:::\n ${response.body}");
-  }
+  // if (kDebugMode) {
+  //   print("_\nPUT:$endpoint RESPONSE:::\n ${response.body}");
+  // }
 
   if (response.statusCode == 200) {
     return response;

@@ -378,7 +378,7 @@ class JobCard extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            job.description,
+            job.description ?? "",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
