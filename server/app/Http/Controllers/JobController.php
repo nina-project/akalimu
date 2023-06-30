@@ -23,7 +23,7 @@ class JobController extends AppBaseController
     public function index(Request $request)
     {
         /** @var Job $jobs */
-        $jobs = Job::all();
+        $jobs = Job::latest()->with('categories')->get();
 
         return view('jobs.index')
             ->with('jobs', $jobs);

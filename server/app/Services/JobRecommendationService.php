@@ -11,56 +11,51 @@ use Throwable;
 
 class JobRecommendationService
 {
-    public function recommendJobs(User $user)
+    public function recommendJobs()
     {
-        // Get all jobs
-        $jobs = Job::all();
+        foreach (User::all() as $user) {
+            // Get all jobs
+            $jobs = Job::all();
 
-        // Create user's interests vector
-        $userInterests = $user->interests()->pluck('name')->toArray();
-        $userInterestsVector = $this->interestsToVector($userInterests);
+            // Create user's interests vector
+            $userInterests = $user->interests()->pluck('name')->toArray();
+            $userInterestsVector = $this->interestsToVector($userInterests);
 
-        // Create user's location vector
-        $userLocation = [$user->country, $user->city];
+            // Create user's location vector
+            $userLocation = [$user->country, $user->city];
 
 
-        $recommendedJobs = [];
+            $recommendedJobs = [];
 
-        foreach ($jobs as $job) {
-            // Create job vector
-            $jobTitle = $job->title;
-            $jobDescription = $job->description;
-            $jobLocation = [$job->country, $job->city];
-            $jobVector = $this->jobToVector($jobTitle, $jobDescription, $jobLocation);
+            foreach ($jobs as $job) {
+                // Create job vector
+                $jobCategories = $job->categories()->pluck('name')->join(' ');
+                $jobTitle = $job->title . ' ' . $jobCategories;
+                $jobDescription = $job->description;
+                $jobLocation = [$job->country, $job->city];
+                $jobVector = $this->jobToVector($jobTitle, $jobDescription, $jobLocation);
 
-            // Calculate similarity scores
-            $interestsScore = $this->cosineSimilarity($userInterestsVector, $jobVector['interests']);
-            $locationScore = $this->cosineSimilarity($userLocation, $jobVector['location']);
+                // Calculate similarity scores
+                $interestsScore = $this->cosineSimilarity($userInterestsVector, $jobVector['interests']);
+                $locationScore = $this->cosineSimilarity($userLocation, $jobVector['location']);
 
-            // Calculate overall similarity score
-            $overallScore = ($interestsScore + $locationScore) / 2;
+                // Calculate overall similarity score
+                $overallScore = ($interestsScore + $locationScore) / 2;
 
-            // Save recommendation to database if score is greater than 0.5
-            if ($overallScore > 0.5) {
-                $recommendation = new JobRecommendation();
-                $recommendation->user_id = $user->id;
-                $recommendation->job_id = $job->id;
-                $recommendation->score = $overallScore;
-                $recommendation->save();
+                // Save recommendation to database if score is greater than 0.5
+                if ($overallScore > 0.5) {
+                    $recommendation = new JobRecommendation();
+                    $recommendation->user_id = $user->id;
+                    $recommendation->job_id = $job->id;
+                    $recommendation->score = $overallScore;
+                    $recommendation->save();
 
-                // Add job to recommended jobs array
-                $job->score = $overallScore;
-                $recommendedJobs[] = $job;
+                    // Add job to recommended jobs array
+                    $job->score = $overallScore;
+                    $recommendedJobs[] = $job;
+                }
             }
         }
-
-        // Sort recommended jobs by score in descending order
-        usort($recommendedJobs, function ($a, $b) {
-            return $b->score - $a->score;
-        });
-
-
-        return $recommendedJobs;
     }
 
     private function interestsToVector($interestsArray)
@@ -82,7 +77,7 @@ class JobRecommendationService
     private function jobToVector($title, $description, $location)
     {
         // Concatenate the job's title and description into a single string
-        $text = $title . ' ' . $description . ' '. $location[0] . ' ' . $location[1];
+        $text = $title . ' ' . $description . ' ' . $location[0] . ' ' . $location[1];
 
         // Remove special characters and convert to lowercase
         $text = preg_replace('/[^a-zA-Z0-9\s]/', '', $text);
@@ -116,15 +111,13 @@ class JobRecommendationService
 
         // Calculate the dot product and magnitude of vectors A and B
         foreach ($vectorA as $key => $value) {
-            try{
+            try {
                 $dotProduct += ($vectorA[$key] * $vectorB[$key]);
                 $magnitudeA += pow($vectorA[$key], 2);
                 $magnitudeB += pow($vectorB[$key], 2);
-
-            }catch(Throwable $t) {
+            } catch (Throwable $t) {
                 error_log("Key no found");
             }
-
         }
 
         // Calculate the cosine similarity

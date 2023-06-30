@@ -78,7 +78,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function interests() {
-        return $this->belongsToMany(Field::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function jobrecommendations()

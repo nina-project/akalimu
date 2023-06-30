@@ -23,7 +23,7 @@ Generate a key with:
 Serve application with:
 >php artisan serve
 
-create `jobrecommenda` database in phpMyAdmin and import `small_dump.sql`
+create `jobrecommenda` database in phpMyAdmin and import `jobrecommenda.sql`
 
 update the .env with the database name for `DB_DATABASE`
 
@@ -64,3 +64,8 @@ To query list of jobs:
 > <http://127.0.0.1:8000/api/v1/jobs>
 
 Passing the Authorization Bearer access token in header.
+
+### API Documentation
+
+The file `thunder-collection_jobRecommendation.json` contains api samples.
+Import it into thunder client VS code extension to view samples.

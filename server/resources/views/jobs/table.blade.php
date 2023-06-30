@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th>Title</th>
-        <th>Category Id</th>
+        <th>Categories</th>
         <th>Description</th>
         <th>Location</th>
         <th>Wage</th>
@@ -15,7 +15,12 @@
         @foreach($jobs as $job)
             <tr>
                 <td>{{ $job->title }}</td>
-            <td>{{ $job->category_id }}</td>
+                <td>
+                    @foreach($job->categories as $category)
+                        <span class="badge badge-primary">{{ $category->name }}</span>
+                    @endforeach
+                </td>
+            {{-- <td>{{ $job->category_id }}</td> --}}
             <td>{{ $job->description }}</td>
             <td>{{ $job->location }}</td>
             <td>{{ $job->wage }}</td>

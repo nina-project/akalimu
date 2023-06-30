@@ -53,19 +53,13 @@ class Category extends Model
         'updated_at' => 'nullable'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function categoryUsers()
+    public function users()
     {
-        return $this->hasMany(\App\Models\CategoryUser::class, 'category_id');
+        return $this->belongsToMany(\App\Models\User::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
     public function jobs()
     {
-        return $this->hasMany(\App\Models\Job::class, 'category_id');
+        return $this->belongsToMany(\App\Models\Job::class, 'category_job');
     }
 }

@@ -7,7 +7,10 @@ use App\Http\Requests\API\UpdateJobAPIRequest;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Error;
 use Response;
+
+use function GuzzleHttp\json_encode;
 
 /**
  * Class JobController
@@ -34,7 +37,10 @@ class JobController extends AppBaseController
             $query->limit($request->get('limit'));
         }
 
-        $jobs = $query->get();
+        $jobs = $query->get()->map ( function ($job) {
+            $job['categories'] = Job::find($job->id)->categories;
+            return $job;
+        });
 
         return $this->sendResponse($jobs->toArray(), 'Jobs retrieved successfully');
     }
@@ -49,12 +55,18 @@ class JobController extends AppBaseController
      */
     public function store(CreateJobAPIRequest $request)
     {
+
         $input = $request->all();
+        $input['posted_by'] = auth()->user()->id;
 
-        /** @var Job $job */
+        $categories = $input['categories'];
+        // /** @var Job $job */
         $job = Job::create($input);
+        $job->categories()->attach($categories);
+        $jobArray = $job->toArray();
+        $jobArray['categories'] = $categories;
 
-        return $this->sendResponse($job->toArray(), 'Job saved successfully');
+        return $this->sendResponse($jobArray, 'Job saved successfully');
     }
 
     /**
@@ -124,5 +136,32 @@ class JobController extends AppBaseController
         $job->delete();
 
         return $this->sendSuccess('Job deleted successfully');
+    }
+    /**
+     * Get jobs that are recommended for me
+     */
+    public function recommended()
+    {
+        $current_user = auth()->user();
+        $recommend_jobs = $current_user->jobrecommendations()->orderBy('score', 'desc')->get();
+        
+        return $this->sendResponse($recommend_jobs->toArray(), 'Recommended jobs retrieved successfully');
+
+    }
+
+    /**
+     * Get recommendations for a job
+     */
+    public function recommendations($job_id) 
+    {
+        $job = Job::find($job_id);
+        if (empty($job)) {
+            return $this->sendError('Job not found');
+        }
+
+        $recommend_jobs = $job->jobrecommendations()->orderBy('score', 'desc')->get();
+
+        return $this->sendResponse($recommend_jobs->toArray(), 'Job Recommended People retrieved successfully');
+
     }
 }

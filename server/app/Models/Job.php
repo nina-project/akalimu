@@ -51,7 +51,6 @@ class Job extends Model
     protected $casts = [
         'id' => 'integer',
         'title' => 'string',
-        'category_id' => 'integer',
         'description' => 'string',
         'location' => 'string',
         'wage' => 'float',
@@ -65,7 +64,6 @@ class Job extends Model
      */
     public static $rules = [
         'title' => 'required|string|max:255',
-        'category_id' => 'required',
         'description' => 'nullable|string',
         'location' => 'nullable|string|max:255',
         'wage' => 'required|numeric',
@@ -73,12 +71,10 @@ class Job extends Model
         'updated_at' => 'nullable'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
-    public function category()
+
+    public function categories()
     {
-        return $this->belongsTo(\App\Models\Category::class, 'category_id');
+        return $this->belongsToMany(\App\Models\Category::class, 'category_job');
     }
 
     /**
@@ -89,11 +85,9 @@ class Job extends Model
         return $this->belongsTo(\App\Models\User::class, 'posted_by');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
+  
     public function jobrecommendations()
     {
-        return $this->hasMany(\App\Models\Jobrecommendation::class, 'job_id');
+        return $this->belongsToMany(\App\Models\User::class, 'jobrecommendations')->withPivot('score');
     }
 }

@@ -28,29 +28,3 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('jobs/recommended', 'JobController@recommended');
     Route::get('jobs/{job}/recommendations', 'JobController@recommendations');
 });
-
-
-// Route::group([
-//     'middleware' => 'api',
-//     'prefix' => 'auth'
-// ], function ($router) {
-//     Route::post('login', 'AuthController@login');
-//     Route::post('logout', 'AuthController@logout');
-//     Route::post('refresh', 'AuthController@refresh');
-//     Route::post('me', 'AuthController@me');
-
-//     Route::resource('field_categories', App\Http\Controllers\API\FieldCategoryAPIController::class);
-
-
-//     Route::resource('fields', App\Http\Controllers\API\FieldAPIController::class);
-
-
-//     Route::resource('jobs', App\Http\Controllers\API\JobAPIController::class);
-
-
-//     Route::resource('users', App\Http\Controllers\API\UserAPIController::class);
-
-
-//     Route::resource('job_recommendations', App\Http\Controllers\API\JobRecommendationAPIController::class);
-
-// });

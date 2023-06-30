@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "jobRecommendation",
-    "dateExported": "2023-06-10T19:23:44.414Z",
+    "dateExported": "2023-06-28T18:55:04.499Z",
     "version": "1.1",
     "folders": [],
     "requests": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-08T16:10:31.155Z",
-            "modified": "2023-06-08T17:01:48.339Z",
+            "modified": "2023-06-27T18:51:33.938Z",
             "headers": [],
             "params": [],
             "body": {
@@ -52,11 +52,11 @@
             "method": "GET",
             "sortNum": 30000,
             "created": "2023-06-08T17:02:29.285Z",
-            "modified": "2023-06-10T19:05:48.249Z",
+            "modified": "2023-06-27T19:02:49.218Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDIzOTE1LCJleHAiOjE2ODY0Mjc1MTUsIm5iZiI6MTY4NjQyMzkxNSwianRpIjoiMFpmaHdCeEFpUEZES1VPWCIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.csiz39cGVjt9vH1vtprPbmEBI7ke_4yQB_Qkv6WfSmM"
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg3ODkxODkzLCJleHAiOjE2ODc4OTU0OTMsIm5iZiI6MTY4Nzg5MTg5MywianRpIjoiQllVd2ExWGc0OVR4S093SiIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tQmaRb5OY1bTbuUlHtuNIhGcN-p1rJ4l81Yc8BZPYHA"
                 }
             ],
             "params": [],
@@ -66,13 +66,18 @@
             "_id": "68eb04a1-9570-4876-81bd-a9b314167e3c",
             "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
             "containerId": "",
-            "name": "recommendations",
+            "name": "recommended",
             "url": "localhost:8000/api/v1/jobs/recommended",
-            "method": "POST",
+            "method": "GET",
             "sortNum": 40000,
             "created": "2023-06-08T17:02:52.048Z",
-            "modified": "2023-06-08T18:45:18.073Z",
-            "headers": [],
+            "modified": "2023-06-28T11:36:50.206Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg3OTUxNDYxLCJleHAiOjE2ODc5NTUwNjEsIm5iZiI6MTY4Nzk1MTQ2MSwianRpIjoiRDdVeVJvZ2dKVndpNWtWWCIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.RljXKIUVqI_EarFX7R33tTpMAxh7KsNavQtJCqHtvMw"
+                }
+            ],
             "params": [],
             "tests": []
         },
@@ -128,17 +133,17 @@
             "method": "POST",
             "sortNum": 70000,
             "created": "2023-06-10T18:52:10.123Z",
-            "modified": "2023-06-10T19:20:14.786Z",
+            "modified": "2023-06-27T18:52:07.489Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDI0Nzc1LCJleHAiOjE2ODY0MjgzNzUsIm5iZiI6MTY4NjQyNDc3NSwianRpIjoiV2d1V2xBMEdMWDQ3VGpyVyIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vobddsouZuU-1R54saZcTIyeLQEq8w8IoM6AehUjqlw"
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg3ODkxODkzLCJleHAiOjE2ODc4OTU0OTMsIm5iZiI6MTY4Nzg5MTg5MywianRpIjoiQllVd2ExWGc0OVR4S093SiIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tQmaRb5OY1bTbuUlHtuNIhGcN-p1rJ4l81Yc8BZPYHA"
                 }
             ],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"House cleaning\",\n  \"category_id\": 3,\n  \"description\": \"hello clean  my house i am off\",\n  \"location\": \"Bwaise Kampala\",\n  \"wage\": 20000,\n  \"posted_by\"\n  \n}",
+                "raw": "{\n  \"title\": \"House cleaning\",\n  \"categories\" : [1,2,3],\n  \"description\": \"hello clean  my house i am off\",\n  \"location\": \"Bwaise Kampala\",\n  \"wage\": 20000\n}",
                 "form": []
             },
             "tests": []
@@ -148,15 +153,15 @@
             "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
             "containerId": "",
             "name": "delete job",
-            "url": "localhost:8000/api/v1/jobs/1",
+            "url": "localhost:8001/api/v1/jobs/1",
             "method": "DELETE",
             "sortNum": 80000,
             "created": "2023-06-10T19:02:50.812Z",
-            "modified": "2023-06-10T19:09:34.275Z",
+            "modified": "2023-06-27T10:53:10.417Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDIzOTE1LCJleHAiOjE2ODY0Mjc1MTUsIm5iZiI6MTY4NjQyMzkxNSwianRpIjoiMFpmaHdCeEFpUEZES1VPWCIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.csiz39cGVjt9vH1vtprPbmEBI7ke_4yQB_Qkv6WfSmM"
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDEvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg3ODYyODc2LCJleHAiOjE2ODc4NjY0NzYsIm5iZiI6MTY4Nzg2Mjg3NiwianRpIjoiV3Y4RjRZT21lb3lkSUdXciIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.JxOS_V4bDyaThpChK5TYCfTV-tMlA_QNt7DpeT7a9mo"
                 }
             ],
             "params": [],
@@ -184,6 +189,25 @@
                 "raw": "{\n  \"title\": \"Car washing\"\n}",
                 "form": []
             },
+            "tests": []
+        },
+        {
+            "_id": "83b05469-69bd-4cb1-abde-b20f73ce6bb8",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "recommendations",
+            "url": "localhost:8000/api/v1/jobs/1/recommendations",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2023-06-28T11:20:58.185Z",
+            "modified": "2023-06-28T11:24:42.706Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg3OTUxNDYxLCJleHAiOjE2ODc5NTUwNjEsIm5iZiI6MTY4Nzk1MTQ2MSwianRpIjoiRDdVeVJvZ2dKVndpNWtWWCIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.RljXKIUVqI_EarFX7R33tTpMAxh7KsNavQtJCqHtvMw"
+                }
+            ],
+            "params": [],
             "tests": []
         }
     ]

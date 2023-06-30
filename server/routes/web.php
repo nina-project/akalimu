@@ -1,6 +1,8 @@
 <?php
 
+use Facade\Ignition\JobRecorder\JobRecorder;
 use Illuminate\Support\Facades\Route;
+use App\Services\JobRecommendationService;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,37 +17,35 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth',],
+Route::group(
+    ['middleware' => 'auth',],
     function () {
-        Route::get('/', function() {
+        Route::get('/', function () {
             return redirect(route('home'));
         });
 
-        Route::view('/', 'dashboards.home');
-
+        Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
         Route::resource('fieldCategories', App\Http\Controllers\FieldCategoryController::class);
-        
-        
+
         Route::resource('fields', App\Http\Controllers\FieldController::class);
-        
-        
+
         Route::resource('jobs', App\Http\Controllers\JobController::class);
-        
-        
+
         Route::resource('users', App\Http\Controllers\UserController::class);
-        
-        
+
         Route::resource('jobRecommendations', App\Http\Controllers\JobRecommendationController::class);
-        
-        
+
         Route::resource('fieldCategories', App\Http\Controllers\FieldCategoryController::class);
-        
-        
+
         Route::resource('jobRecommendations', App\Http\Controllers\JobRecommendationController::class);
+
+        Route::resource('categories', App\Http\Controllers\CategoryController::class);
     }
 );
 
-
-
-Route::resource('categories', App\Http\Controllers\CategoryController::class);
+Route::get('test', function () {
+   $recommendation = new JobRecommendationService;
+    $recommendation->recommendJobs();
+    
+});

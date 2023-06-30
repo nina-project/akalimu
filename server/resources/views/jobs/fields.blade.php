@@ -6,8 +6,8 @@
 
 <!-- Category Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('category_id', 'Job Category:') !!}
-    {!! Form::select('category_id',  $categories , null, ['class' => 'form-control']) !!}
+    {!! Form::label('category', 'Job Category:') !!}
+    {!! Form::select('category[]',  $categories , null, ['class' => 'form-control', 'multiple' => true, 'placeholder' => 'Select Categories']) !!}
 </div>
 
 <!-- Location Field -->

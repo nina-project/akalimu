@@ -16,7 +16,6 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->longText('description')->nullable();
             $table->string('location')->nullable();
             $table->double('wage', 8,2)->default(0.0);
@@ -32,6 +31,8 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('jobs');
+        Schema::enableForeignKeyConstraints();
     }
 }
