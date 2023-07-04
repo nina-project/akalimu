@@ -16,8 +16,6 @@ class PostTaskPage extends StatefulWidget {
 
 class _PostTaskPageState extends State<PostTaskPage> {
   Category? categoryValue;
-  String? locationValue;
-  bool isRemote = false;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();

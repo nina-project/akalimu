@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:akalimu/data/local_preferences.dart';
-import 'package:akalimu/data/models/user_data.dart';
-//import 'package:akalimu/login_view_screen.dart';
-//import 'package:akalimu/main_ui_controller.dart';
+import 'package:akalimu/data/models/client.dart';
 import 'package:akalimu/screens/auth/register_view.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +10,17 @@ class HomePageRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserData? userData = LocalPreferences().userData;
+    final Client? userData = LocalPreferences().userData;
     if (userData != null) {
-      log(userData.toString());
+      // log(userData.toString());
+      // log("Token:\n");
+      // log(LocalPreferences().userToken);
+
+      // String? city =
+      //     Provider.of<AppProvider>(context, listen: false).userData?.city;
+      // if (city == null) {
+      //   return const AdditionalDetails();
+      // }
       return const MainPage();
     } else {
       return const RegisterPage();

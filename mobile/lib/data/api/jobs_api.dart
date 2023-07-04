@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:akalimu/data/models/client.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/category.dart';
@@ -9,6 +10,8 @@ import 'api.dart';
 
 class JobsAPI {
   final String jobsAPIEndpoint = "$baseAPIUrl/jobs";
+  final String userJobsAPIEndpoint = "$baseAPIUrl/jobs_by_user";
+  final String recommendedJobsAPIEndpoint = "$baseAPIUrl/jobs/recommended";
   final String categoriesAPIEndpoint = "$baseAPIUrl/categories";
 
   Future<List<Job>> getAll(QueryParams params) async {
@@ -19,6 +22,49 @@ class JobsAPI {
         return jobsFromJson(response.body);
       } else {
         return Future.error('Failed to load jobs from API');
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<List<Job>> getUserJobs(int id) async {
+    try {
+      http.Response response =
+          await getFromEndpoint("$userJobsAPIEndpoint/$id");
+      if (response.statusCode == 200) {
+        return jobsFromJson(response.body);
+      } else {
+        return Future.error('Failed to load jobs from API');
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<List<Job>> getRecommended(QueryParams params) async {
+    try {
+      http.Response response =
+          await getFromEndpoint(recommendedJobsAPIEndpoint, params: params);
+      if (response.statusCode == 200) {
+        return jobsFromJson(response.body);
+      } else {
+        return Future.error('Failed to load jobs from API');
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<List<Client>> getRecommendedClientsForJob(
+      int jobId, QueryParams params) async {
+    try {
+      http.Response response =
+          await getFromEndpoint("$jobsAPIEndpoint/$jobId/recommendations");
+      if (response.statusCode == 200) {
+        return clientsFromJson(response.body);
+      } else {
+        return Future.error('Failed to load clients from API');
       }
     } catch (e) {
       return Future.error(e);

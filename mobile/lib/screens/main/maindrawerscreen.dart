@@ -125,32 +125,31 @@ class _MainDrawerState extends State<MainDrawer> {
                       style: TextStyle(fontSize: 18, color: Colors.black)),
                 ),
               ),
-              const SizedBox(height: 20),
-              ListTile(
-                leading: const Icon(Icons.payment, color: Color(0xFF163a96)),
-                title: TextButton(
-                  onPressed: () {
-                    _makePayment(
-                        context,
-                        ((appProvider.userData?.email).toString()).trim(),
-                        amount.trim());
-                    // Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const Payments()));
-                  },
-                  child: const Text('Payments',
-                      style: TextStyle(fontSize: 18, color: Colors.black)),
-                ),
-              ),
+              // const SizedBox(height: 20),
+              // ListTile(
+              //   leading: const Icon(Icons.payment, color: Color(0xFF163a96)),
+              //   title: TextButton(
+              //     onPressed: () {
+              //       _makePayment(
+              //           context,
+              //           ((appProvider.userData?.email).toString()).trim(),
+              //           amount.trim());
+              //       // Navigator.pushReplacement(
+              //       //     context,
+              //       //     MaterialPageRoute(
+              //       //         builder: (context) => const Payments()));
+              //     },
+              //     child: const Text('Payments',
+              //         style: TextStyle(fontSize: 18, color: Colors.black)),
+              //   ),
+              // ),
               const SizedBox(height: 20),
               ListTile(
                 leading:
                     const Icon(Icons.help_outline, color: Color(0xFF163a96)),
                 title: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => const Help()));
+                    Navigator.popAndPushNamed(context, Help.routeName);
                   },
                   child: const Text('Help',
                       style: TextStyle(fontSize: 18, color: Colors.black)),
@@ -162,7 +161,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     const Icon(Icons.info_outline, color: Color(0xFF163a96)),
                 title: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context,
+                    Navigator.of(context).pop();
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const About()));
                   },
                   child: const Text('About',

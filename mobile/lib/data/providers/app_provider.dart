@@ -1,6 +1,7 @@
 import 'package:akalimu/data/api/auth_api.dart';
 import 'package:akalimu/data/api/jobs_api.dart';
 import 'package:akalimu/data/local_preferences.dart';
+import 'package:akalimu/data/models/auth_object.dart';
 import 'package:akalimu/data/models/client.dart';
 import 'package:akalimu/data/models/job.dart';
 import 'package:akalimu/data/query_params.dart';
@@ -8,19 +9,24 @@ import 'package:flutter/material.dart';
 
 import '../api/clients_api.dart';
 import '../models/category.dart';
-import '../models/user_data.dart';
 
 class AppProvider extends ChangeNotifier {
-  UserData? _userData;
-  UserData? get userData => _userData;
+  Client? _userData;
+  Client? get userData => _userData;
 
   List<Job> _jobs = [];
   List<Job> get jobs => _jobs;
+  List<Job> _userJobs = [];
+  List<Job> get userJobs => _userJobs;
+  List<Job> _recommendedJobs = [];
+  List<Job> get recommendedJobs => _recommendedJobs;
   List<Category> _categories = [];
   List<Category> get categories => _categories;
 
-  List<Client> _workers = [];
-  List<Client> get workers => _workers;
+  List<Client> _clients = [];
+  List<Client> get clients => _clients;
+  List<Client> _recommendedClients = [];
+  List<Client> get recommendedClients => _recommendedClients;
 
   Job? _selectedJob;
   Job? get selectedJob => _selectedJob;
@@ -42,12 +48,25 @@ class AppProvider extends ChangeNotifier {
   final ClientsAPI _clientsAPI = ClientsAPI();
   final LocalPreferences _localPreferences = LocalPreferences();
 
-  Future<void> registerUser(UserData userData) async {
+  Future<void> registerUser(AuthObject userData) async {
     _isLoading = true;
     notifyListeners();
-    final UserData createdUser = await _authAPI.register(userData);
-    _userData = createdUser;
-    _localPreferences.setUserData(createdUser);
+    final AuthObject? authObject = await _authAPI.register(userData);
+    if (authObject?.accessToken != null) {
+      Client tempUser = Client(
+        id: 0,
+        name: authObject!.name!,
+        email: authObject.email!,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+      _userData = tempUser;
+      await _localPreferences.setUserToken(authObject.accessToken!);
+      await _localPreferences.setUserPassword(authObject.password!);
+      await _localPreferences.setUserData(tempUser);
+      //after setting the dummy user object, get the actual user data from the db.
+      await fetchAndUpdateUserData();
+    }
     _isLoading = false;
     notifyListeners();
   }
@@ -55,47 +74,62 @@ class AppProvider extends ChangeNotifier {
   Future<void> loginUser(String email, String password) async {
     _isLoading = true;
     notifyListeners();
-    final String? token =
+    final AuthObject? authObject =
         await _authAPI.login(email: email, password: password);
-    if (token != null) {
-      //after getting token, temporarily set a dummy userObject with token.
-      //this is to ensure the getUserData api query works since it requires a bearer token.
-      _userData = UserData(
-          name: "No Name",
-          email: email,
-          password: password,
-          accessToken: token);
+    if (authObject?.accessToken != null) {
+      //after getting token, temporarily set a dummy userObject.
+      //store token and password in local preferences.
+      _userData = Client(
+        id: 0,
+        name: "No Name",
+        email: email,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+      await _localPreferences.setUserToken(authObject!.accessToken!);
+      await _localPreferences.setUserPassword(password);
       await _localPreferences.setUserData(_userData);
       //after setting the dummy user object, get the actual user data from the db.
-      await updateUserData();
+      await fetchAndUpdateUserData();
     }
     _isLoading = false;
     notifyListeners();
   }
 
   init() async {
+    fetchRecommendedJobs();
+    fetchUserJobs();
     fetchAllJobs();
-    fetchAllClients();
-    updateUserData();
+    fetchAndUpdateUserData();
   }
 
-  Future<void> updateUserData() async {
+  Future<void> fetchAndUpdateUserData() async {
     //updates the local and provider userData with the latest from the db.
     _isLoading = true;
     notifyListeners();
-    UserData? currentUserData = _localPreferences.userData;
+    Client? currentUserData = _localPreferences.userData;
 
-    final UserData? userDataFromDB =
+    final Client? userDataFromDB =
         await _authAPI.getUserData(currentUserData?.email ?? _userData?.email);
     if (userDataFromDB != null) {
-      // create a new userData object and append the bearer token and password to the user data object from db and update the provider and locally stored instance.
-      UserData updatedUserFromDB = userDataFromDB.copyWith(
-          token: currentUserData?.accessToken,
-          password: currentUserData?.password);
-      _userData = updatedUserFromDB;
-      _localPreferences.setUserData(updatedUserFromDB);
+      _userData = userDataFromDB;
+      _localPreferences.setUserData(userDataFromDB);
     }
 
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future fetchRecommendedJobs() async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      _recommendedJobs = await _jobsAPI
+          .getRecommended(JobsQueryParams(filter: JobsQueryParams.filterAll));
+    } catch (e) {
+      _error = e.toString();
+      print("Error getting recommended jobs$e");
+    }
     _isLoading = false;
     notifyListeners();
   }
@@ -108,7 +142,27 @@ class AppProvider extends ChangeNotifier {
           .getAll(JobsQueryParams(filter: JobsQueryParams.filterAll));
     } catch (e) {
       _error = e.toString();
-      print(e);
+      debugPrint(e.toString());
+    }
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future fetchUserJobs({int? id}) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      int? userId;
+      if (id != null) {
+        userId = id;
+      } else {
+        userId = _userData?.id ?? _localPreferences.userData?.id;
+      }
+
+      _userJobs = await _jobsAPI.getUserJobs(userId!);
+    } catch (e) {
+      _error = e.toString();
+      debugPrint(e.toString());
     }
     _isLoading = false;
     notifyListeners();
@@ -151,8 +205,21 @@ class AppProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _workers = await _clientsAPI
+      _clients = await _clientsAPI
           .getAll(ClientsQueryParams(filter: ClientsQueryParams.filterAll));
+    } catch (e) {
+      _error = e.toString();
+    }
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future fetchRecommendedClientsForJob(int id) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      _recommendedClients = await _jobsAPI.getRecommendedClientsForJob(
+          id, ClientsQueryParams(filter: ClientsQueryParams.filterAll));
     } catch (e) {
       _error = e.toString();
     }
@@ -170,14 +237,25 @@ class AppProvider extends ChangeNotifier {
     return client;
   }
 
-  Future<Client> createClient(Client worker) async {
+  Future<Client> createClient(Client client) async {
     _isLoading = true;
     notifyListeners();
-    final Client createdWorker = await _clientsAPI.insert(worker);
-    _workers.add(createdWorker);
+    final Client createdWorker = await _clientsAPI.insert(client);
+    _clients.add(createdWorker);
     _isLoading = false;
     notifyListeners();
     return createdWorker;
+  }
+
+  Future<Client> updateUserData(Client client) async {
+    _isLoading = true;
+    notifyListeners();
+    final Client updatedClient = await _clientsAPI.update(client);
+    _userData = updatedClient;
+    await _localPreferences.setUserData(updatedClient);
+    _isLoading = false;
+    notifyListeners();
+    return updatedClient;
   }
 
   Future<bool> signOutUser() async {

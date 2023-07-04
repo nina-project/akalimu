@@ -29,6 +29,7 @@ class UsersQueryParams extends QueryParams {
 
 class JobsQueryParams extends QueryParams {
   static const String filterAll = "all";
+  static const String filterUser = "user";
 
   final int? limit;
   final int? offset;

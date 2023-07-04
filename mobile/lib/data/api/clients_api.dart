@@ -48,6 +48,17 @@ class ClientsAPI {
     }
   }
 
+  Future<Client> update(Client value) async {
+    try {
+      http.Response response = await putToEndpoint(
+          "$clientsAPIEndpoint/${value.id}", value.toMapForUpdate());
+      Map<String, dynamic> json = jsonDecode(response.body);
+      return Client.fromJson(json["data"]);
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
   Future<void> delete(Client value) async {
     await deleteFromEndpoint("$clientsAPIEndpoint/${value.id}");
   }

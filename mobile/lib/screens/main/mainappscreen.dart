@@ -1,7 +1,7 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
-import 'package:akalimu/screens/clients/recommendationscreen.dart';
+import 'package:akalimu/screens/commended/commendedscreen.dart';
 import 'package:akalimu/screens/jobs/posttaskscreen.dart';
 import 'package:akalimu/screens/jobs/taskscreen.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
@@ -72,11 +72,11 @@ class _MainPageState extends State<MainPage> {
           drawer: const MainDrawer(
             userImage: '',
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
               TaskPage(),
-              RecommendationCardListView(),
-              PostTaskPage(),
+              const CommendedScreen(),
+              const PostTaskPage(),
             ],
           ),
         ));

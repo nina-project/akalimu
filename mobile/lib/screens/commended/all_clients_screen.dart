@@ -1,127 +1,26 @@
 import 'package:akalimu/data/models/client.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
-import 'package:akalimu/screens/clients/client_screen.dart';
+import 'package:akalimu/screens/commended/client_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecommendationCardListView extends StatefulWidget {
-  const RecommendationCardListView({super.key});
+class AllClientsScreen extends StatefulWidget {
+  static const routeName = '/all_clients';
+  const AllClientsScreen({super.key});
 
   @override
-  State<RecommendationCardListView> createState() =>
-      _RecommendationCardListViewState();
+  State<AllClientsScreen> createState() => _AllClientsScreenState();
 }
 
-class _RecommendationCardListViewState
-    extends State<RecommendationCardListView> {
-  final List<Map<String, String>> cardData = [
-    {
-      'name': 'John Doe',
-      'location': 'New York',
-      'phone': '+1 123-456-7890',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    {
-      'name': 'Jane Smith',
-      'location': 'Los Angeles',
-      'phone': '+1 234-567-8901',
-    },
-    // Add more data as needed
-  ];
-
+class _AllClientsScreenState extends State<AllClientsScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppProvider>(builder: (context, appProvider, _) {
       return Scaffold(
         body: ListView.builder(
-          itemCount: appProvider.workers.length,
+          itemCount: appProvider.clients.length,
           itemBuilder: (context, index) {
-            Client worker = appProvider.workers[index];
-            // final data = cardData[index];
-            // return CustomCard(
-            //   name: data['name'] ?? '',
-            //   location: data['location'] ?? '',
-            //   phone: data['phone'] ?? '',
-            // );
+            Client worker = appProvider.clients[index];
             return ClientCard(client: worker);
           },
         ),

@@ -77,7 +77,8 @@ class _ClientScreenState extends State<ClientScreen> {
                               size: 18,
                             ),
                             const SizedBox(width: 5),
-                            Text(appProvider.selectedClient?.city ?? "_"),
+                            Text(appProvider.selectedClient?.city ??
+                                "No location details"),
                           ],
                         ),
                       ),

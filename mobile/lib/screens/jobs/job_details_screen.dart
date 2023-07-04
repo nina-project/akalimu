@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/providers/app_provider.dart';
-import '../clients/client_screen.dart';
+import '../commended/client_screen.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   static const String routeName = '/job-details';

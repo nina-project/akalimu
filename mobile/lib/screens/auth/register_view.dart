@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:akalimu/data/models/user_data.dart';
+import 'package:akalimu/data/models/auth_object.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
 import 'package:akalimu/routes.dart';
 import 'package:flutter/material.dart';
@@ -149,14 +149,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 // }
                 try {
                   String fullName = "${_firstName.text} ${_lastName.text}";
-                  UserData userData = UserData(
+                  AuthObject authObject = AuthObject(
                     name: fullName,
                     email: _email.text,
                     password: _password.text,
                   );
                   AppProvider appProvider =
                       Provider.of<AppProvider>(context, listen: false);
-                  await appProvider.registerUser(userData).then((_) {
+                  await appProvider.registerUser(authObject).then((_) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         homePageRoute, (route) => false);
                   });

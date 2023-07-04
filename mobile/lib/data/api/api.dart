@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:akalimu/data/models/user_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,8 +11,7 @@ const String hostUrl = "http://127.0.0.1:8000";
 const String baseAPIUrl = "$hostUrl/api/v1";
 
 Future<String?> getIdToken() async {
-  final UserData? userData = LocalPreferences().userData;
-  final String? idToken = userData?.accessToken;
+  final String? idToken = LocalPreferences().userToken;
   return idToken;
 }
 

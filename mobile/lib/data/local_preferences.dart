@@ -1,4 +1,4 @@
-import 'package:akalimu/data/models/user_data.dart';
+import 'package:akalimu/data/models/client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalPreferences {
@@ -21,10 +21,14 @@ class LocalPreferences {
     return _sharedPreferences.getString('userToken') ?? "";
   }
 
-  UserData? get userData {
+  get userPassword {
+    return _sharedPreferences.getString('userPassword') ?? "";
+  }
+
+  Client? get userData {
     String? userJsonString = _sharedPreferences.getString('userData');
     if (userJsonString == null) return null;
-    return UserData.fromJson(userJsonString);
+    return Client.fromJson(userJsonString);
   }
 
   Future<bool> setRunTimes(int value) {
@@ -35,7 +39,11 @@ class LocalPreferences {
     return _sharedPreferences.setString('userToken', value);
   }
 
-  Future<bool> setUserData(UserData? user) async {
+  Future<bool> setUserPassword(String value) {
+    return _sharedPreferences.setString('userPassword', value);
+  }
+
+  Future<bool> setUserData(Client? user) async {
     if (user == null) {
       return _sharedPreferences.remove('userData');
     }
