@@ -1,11 +1,13 @@
 import 'package:akalimu/data/local_preferences.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'routes.dart';
 import 'screens/main/home_page_route_screen.dart';
 import 'screens/main/page_not_found.dart';
+import 'widgets/center_mobile_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,11 @@ class MainApp extends StatelessWidget {
             lazy: false,
           ),
         ],
-        child: home,
+        child: kIsWeb
+            ? CenterMobileViewWidget(
+                child: home,
+              )
+            : home,
       ),
       theme: ThemeData(
         brightness: Brightness.light,

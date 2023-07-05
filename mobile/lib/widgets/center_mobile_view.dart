@@ -16,7 +16,7 @@ class CenterMobileViewWidget extends StatelessWidget {
         body: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: responsiveValue(screenSize, 8, 70, null),
-                vertical: responsiveValue(screenSize, 2, 60, null)),
+                vertical: responsiveValue(screenSize, 2, 40, null)),
             alignment: Alignment.topCenter,
             color: backgroundColor,
             child: Center(

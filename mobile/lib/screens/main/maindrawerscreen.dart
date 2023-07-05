@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:akalimu/profilescreen.dart';
 import 'package:akalimu/routes.dart';
 import 'package:flutter/foundation.dart';
@@ -20,30 +17,6 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  // User? user = FirebaseAuth.instance.currentUser;
-  String? _ref;
-  String amount = '10000';
-  void setRef() {
-    Random rand = Random();
-    int number = rand.nextInt(2000);
-
-    if (Platform.isAndroid) {
-      setState(() {
-        _ref = "AndroidRef1789$number";
-      });
-    } else {
-      setState(() {
-        _ref = "IOSRef1789$number";
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    setRef();
-    super.initState();
-  }
-
   // static const IconData verified =
   //     IconData(0xe699, fontFamily: 'MaterialIcons');
   @override
