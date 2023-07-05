@@ -1,24 +1,18 @@
 import 'package:akalimu/data/local_preferences.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'routes.dart';
 import 'screens/main/home_page_route_screen.dart';
 import 'screens/main/page_not_found.dart';
-import 'widgets/center_mobile_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await LocalPreferences().init();
 
-  runApp(kIsWeb
-      ? const CenterMobileViewWidget(
-          child: MainApp(),
-        )
-      : const MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {

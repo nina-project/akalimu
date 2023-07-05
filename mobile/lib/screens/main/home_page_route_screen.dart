@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:akalimu/data/local_preferences.dart';
 import 'package:akalimu/data/models/client.dart';
 import 'package:akalimu/screens/auth/register_view.dart';
@@ -13,8 +15,8 @@ class HomePageRoute extends StatelessWidget {
     final Client? userData = LocalPreferences().userData;
     if (userData != null) {
       // log(userData.toString());
-      // log("Token:\n");
-      // log(LocalPreferences().userToken);
+      log("Token:\n");
+      log(LocalPreferences().userToken);
 
       // String? city =
       //     Provider.of<AppProvider>(context, listen: false).userData?.city;
