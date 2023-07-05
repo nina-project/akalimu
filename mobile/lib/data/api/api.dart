@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../local_preferences.dart';
 import '../query_params.dart';
+import 'auth_api.dart';
 
 const String hostUrl = "http://127.0.0.1:8000";
 const String baseAPIUrl = "$hostUrl/api/v1";
@@ -38,12 +38,15 @@ Future<http.Response> getFromEndpoint(String endpoint,
     headers: header,
   );
 
-  if (kDebugMode) {
-    print("_\nGET:$endpoint RESPONSE:::::\n${response.body}");
-  }
+  // if (kDebugMode) {
+  //   print("_\nGET:$endpoint RESPONSE:::::\n${response.body}");
+  // }
 
   if (response.statusCode == 200) {
     return response;
+  } else if (response.statusCode == 401) {
+    await AuthAPI().refreshToken();
+    return getFromEndpoint(endpoint, params: params);
   } else {
     throw Exception(const JsonDecoder().convert(response.body)['message']);
   }
@@ -64,12 +67,15 @@ Future<http.Response> postToEndpoint(
 
   if (response.statusCode == 200 || response.statusCode == 201) {
     return response;
+  } else if (response.statusCode == 401) {
+    await AuthAPI().refreshToken();
+    return postToEndpoint(endpoint, object);
   } else {
     throw Exception(const JsonDecoder().convert(response.body)['message']);
   }
 }
 
-Future<http.Response> putToEndpoint(String endpoint, dynamic object) async {
+Future<http.Response> patchToEndpoint(String endpoint, dynamic object) async {
   final header = await getHeaders();
 
   final response = await http.patch(
@@ -84,6 +90,9 @@ Future<http.Response> putToEndpoint(String endpoint, dynamic object) async {
 
   if (response.statusCode == 200) {
     return response;
+  } else if (response.statusCode == 401) {
+    await AuthAPI().refreshToken();
+    return patchToEndpoint(endpoint, object);
   } else {
     return Future.error(const JsonDecoder().convert(response.body)['message']);
   }
@@ -97,6 +106,9 @@ Future<http.Response> deleteFromEndpoint(String endpoint) async {
   );
   if (response.statusCode == 200) {
     return response;
+  } else if (response.statusCode == 401) {
+    await AuthAPI().refreshToken();
+    return deleteFromEndpoint(endpoint);
   } else {
     throw Exception(const JsonDecoder().convert(response.body)['message']);
   }

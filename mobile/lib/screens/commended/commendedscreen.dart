@@ -29,15 +29,40 @@ class _CommendedScreenState extends State<CommendedScreen> {
 
             _refreshController.refreshCompleted();
           },
-          child: ListView.builder(
-            itemCount: appProvider.userJobs.length,
-            itemBuilder: (context, index) {
-              Job job = appProvider.userJobs[index];
-              return _MyJobsCard(
-                job: job,
+          child: Builder(builder: (context) {
+            if (appProvider.userJobs.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0).copyWith(top: 30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        "No jobs recommended at the moment",
+                        style: TextStyle(color: Colors.black38),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Post a job to get recommendations",
+                        style: TextStyle(color: Colors.black38),
+                      ),
+                    ],
+                  ),
+                ),
               );
-            },
-          ),
+            }
+            return ListView.builder(
+              itemCount: appProvider.userJobs.length,
+              itemBuilder: (context, index) {
+                Job job = appProvider.userJobs[index];
+                return _MyJobsCard(
+                  job: job,
+                );
+              },
+            );
+          }),
         ),
       );
     });

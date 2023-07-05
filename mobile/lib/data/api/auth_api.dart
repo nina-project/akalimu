@@ -5,6 +5,7 @@ import 'package:akalimu/data/models/auth_object.dart';
 import 'package:akalimu/data/models/client.dart';
 import 'package:http/http.dart' as http;
 
+import '../local_preferences.dart';
 import '../query_params.dart';
 import 'api.dart';
 
@@ -12,6 +13,22 @@ class AuthAPI {
   final String loginAPIEndpoint = "$baseAPIUrl/login";
   final String registerAPIEndpoint = "$baseAPIUrl/register";
   final String usersAPIEndpoint = "$baseAPIUrl/users";
+
+  Future refreshToken() async {
+    final LocalPreferences localPreferences = LocalPreferences();
+    String? email = localPreferences.userData?.email;
+    String? password = await localPreferences.userPassword;
+
+    if (email != null && password != null) {
+      final AuthObject? authObject = await login(
+        email: email,
+        password: password,
+      );
+      if (authObject?.accessToken != null) {
+        await localPreferences.setUserToken(authObject!.accessToken!);
+      }
+    }
+  }
 
   Future<AuthObject?> login(
       {required String email, required String password}) async {

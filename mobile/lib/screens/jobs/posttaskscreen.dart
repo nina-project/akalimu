@@ -3,7 +3,6 @@
 import 'package:akalimu/data/models/category.dart';
 import 'package:akalimu/data/models/job.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
-import 'package:akalimu/screens/jobs/job_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -284,8 +283,13 @@ class _PostTaskPageState extends State<PostTaskPage> {
       appProvider.createJob(job).then((value) {
         if (value.id != null) {
           _formKey.currentState!.reset();
-          Navigator.of(context)
-              .pushNamed(JobDetailsScreen.routeName, arguments: value.id);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Job created successfully'),
+            ),
+          );
+          // Navigator.of(context)
+          //     .pushNamed(JobDetailsScreen.routeName, arguments: value.id);
         }
       });
     }
