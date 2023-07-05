@@ -45,8 +45,12 @@ Future<http.Response> getFromEndpoint(String endpoint,
   if (response.statusCode == 200) {
     return response;
   } else if (response.statusCode == 401) {
-    await AuthAPI().refreshToken();
-    return getFromEndpoint(endpoint, params: params);
+    try {
+      await AuthAPI().refreshToken();
+      return getFromEndpoint(endpoint, params: params);
+    } catch (e) {
+      return Future.error(e);
+    }
   } else {
     throw Exception(const JsonDecoder().convert(response.body)['message']);
   }
@@ -68,8 +72,12 @@ Future<http.Response> postToEndpoint(
   if (response.statusCode == 200 || response.statusCode == 201) {
     return response;
   } else if (response.statusCode == 401) {
-    await AuthAPI().refreshToken();
-    return postToEndpoint(endpoint, object);
+    try {
+      await AuthAPI().refreshToken();
+      return postToEndpoint(endpoint, object);
+    } catch (e) {
+      return Future.error(e);
+    }
   } else {
     throw Exception(const JsonDecoder().convert(response.body)['message']);
   }
@@ -91,8 +99,12 @@ Future<http.Response> patchToEndpoint(String endpoint, dynamic object) async {
   if (response.statusCode == 200) {
     return response;
   } else if (response.statusCode == 401) {
-    await AuthAPI().refreshToken();
-    return patchToEndpoint(endpoint, object);
+    try {
+      await AuthAPI().refreshToken();
+      return patchToEndpoint(endpoint, object);
+    } catch (e) {
+      return Future.error(e);
+    }
   } else {
     return Future.error(const JsonDecoder().convert(response.body)['message']);
   }
@@ -107,8 +119,12 @@ Future<http.Response> deleteFromEndpoint(String endpoint) async {
   if (response.statusCode == 200) {
     return response;
   } else if (response.statusCode == 401) {
-    await AuthAPI().refreshToken();
-    return deleteFromEndpoint(endpoint);
+    try {
+      await AuthAPI().refreshToken();
+      return deleteFromEndpoint(endpoint);
+    } catch (e) {
+      return Future.error(e);
+    }
   } else {
     throw Exception(const JsonDecoder().convert(response.body)['message']);
   }

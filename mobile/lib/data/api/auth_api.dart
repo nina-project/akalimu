@@ -27,6 +27,8 @@ class AuthAPI {
       if (authObject?.accessToken != null) {
         await localPreferences.setUserToken(authObject!.accessToken!);
       }
+    } else {
+      throw Exception('No user data found');
     }
   }
 
