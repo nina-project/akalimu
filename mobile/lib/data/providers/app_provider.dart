@@ -201,6 +201,16 @@ class AppProvider extends ChangeNotifier {
     return createdJob;
   }
 
+  Future deleteJob(Job job) async {
+    _isLoading = true;
+    notifyListeners();
+    await _jobsAPI.delete(job);
+    _jobs.removeWhere((j) => j.id == job.id);
+    _userJobs.removeWhere((j) => j.id == job.id);
+    _isLoading = false;
+    notifyListeners();
+  }
+
   Future fetchAllClients() async {
     _isLoading = true;
     notifyListeners();

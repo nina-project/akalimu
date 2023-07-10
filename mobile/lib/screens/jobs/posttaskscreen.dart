@@ -6,6 +6,8 @@ import 'package:akalimu/data/providers/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'job_details_screen.dart';
+
 class PostTaskPage extends StatefulWidget {
   const PostTaskPage({super.key});
 
@@ -283,13 +285,36 @@ class _PostTaskPageState extends State<PostTaskPage> {
       appProvider.createJob(job).then((value) {
         if (value.id != null) {
           _formKey.currentState!.reset();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Job created successfully'),
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     content: Text('Job created successfully'),
+          //   ),
+          // );
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Created successfully'),
+              content: const Text('Job created successfully'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Okay'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed(
+                      JobDetailsScreen.routeName,
+                      arguments: value.id,
+                    );
+                  },
+                  child: const Text('View job'),
+                ),
+              ],
             ),
           );
-          // Navigator.of(context)
-          //     .pushNamed(JobDetailsScreen.routeName, arguments: value.id);
         }
       });
     }

@@ -183,44 +183,73 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               const SizedBox(
                 height: 30,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                          "Successfully applied for the job, We shall update you!"),
+              Builder(builder: (context) {
+                int userId = appProvider.userData?.id ?? 0;
+                int creatorId = appProvider.selectedJob?.postedBy ?? 0;
+
+                if (userId == creatorId) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    onPressed: () {
+                      appProvider.deleteJob(appProvider.selectedJob!);
+                      Navigator.of(context).pop();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.check_circle_outline_outlined),
+                        SizedBox(width: 5),
+                        Text("Delete Job"),
+                      ],
                     ),
                   );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.check_circle_outline_outlined),
-                    SizedBox(width: 5),
-                    Text("Apply"),
-                  ],
-                ),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                          "Thank you for your feedback, Job removed from your recommendations"),
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "Successfully applied for the job, We shall update you!"),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.check_circle_outline_outlined),
+                          SizedBox(width: 5),
+                          Text("Apply"),
+                        ],
+                      ),
                     ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.cancel_outlined),
-                    Text("Not interested"),
+                    OutlinedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "Thank you for your feedback, Job removed from your recommendations"),
+                          ),
+                        );
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.red,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.cancel_outlined),
+                          Text("Not interested"),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),

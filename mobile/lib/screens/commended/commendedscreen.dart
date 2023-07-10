@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../data/models/job.dart';
+import '../jobs/job_details_screen.dart';
 import 'client_screen.dart';
 
 class CommendedScreen extends StatefulWidget {
@@ -128,10 +129,24 @@ class _MyJobsCardState extends State<_MyJobsCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Recommended Professionals",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w300),
+                      Row(
+                        children: [
+                          const Text(
+                            "Recommended Professionals",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w300),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                JobDetailsScreen.routeName,
+                                arguments: widget.job.id,
+                              );
+                            },
+                            child: const Text('View job'),
+                          ),
+                        ],
                       ),
                       Builder(builder: (context) {
                         if (appProvider.isLoading) {
