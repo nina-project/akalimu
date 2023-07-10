@@ -90,4 +90,6 @@ class Job extends Model
     {
         return $this->belongsToMany(\App\Models\User::class, 'jobrecommendations')->withPivot('score');
     }
+
+
 }

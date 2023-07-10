@@ -21,10 +21,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $date = $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null);
         return [
-            'name' => $this->faker->word,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s')
+            'name' => $this->faker->jobTitle,
+        'created_at' => $date->format('Y-m-d H:i:s'),
+        'updated_at' => $date->modify('+1 day')->format('Y-m-d H:i:s'),
         ];
     }
 }

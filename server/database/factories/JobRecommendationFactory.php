@@ -22,8 +22,9 @@ class JobRecommendationFactory extends Factory
     public function definition()
     {
         return [
-            'job_id' => $this->faker->word,
-        'user_id' => $this->faker->word,
+            'job_id' => $this->faker->numberBetween(1,200),
+        'user_id' => $this->faker->numberBetween(1,60),
+        'score' => $this->faker->randomFloat(2, 0.5, 1),
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

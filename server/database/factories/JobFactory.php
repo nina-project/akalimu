@@ -21,15 +21,15 @@ class JobFactory extends Factory
      */
     public function definition()
     {
+        $date = $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null);
         return [
-            'title' => $this->faker->word,
-        'category_id' => $this->faker->word,
+            'title' => $this->faker->jobTitle,
         'description' => $this->faker->text,
-        'location' => $this->faker->word,
-        'wage' => $this->faker->randomDigitNotNull,
-        'posted_by' => $this->faker->word,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s')
+        'location' => $this->faker->country . ',' . $this->faker->city,
+        'wage' => $this->faker->numberBetween(5000, 1000000),
+        'posted_by' => $this->faker->numberBetween(1, 60),
+        'created_at' => $date->modify('+1 month')->format('Y-m-d H:i:s'),
+        'updated_at' => now()->modify('-5 hour')->format('Y-m-d H:i:s'),
         ];
     }
 }

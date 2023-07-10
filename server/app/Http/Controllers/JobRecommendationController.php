@@ -25,7 +25,7 @@ class JobRecommendationController extends AppBaseController
     {
 
         /** @var JobRecommendation $jobRecommendations */
-        $jobRecommendations = JobRecommendation::orderBy('score', 'desc')->get();
+        $jobRecommendations = JobRecommendation::orderBy('score', 'desc')->paginate(10);
 
         return view('job_recommendations.index')
             ->with('jobRecommendations', $jobRecommendations);

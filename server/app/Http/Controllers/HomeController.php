@@ -23,13 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //get all count of jobs per month starting with current month back 12 months
+        //count jobs grouped by month for the past 12 months from current month
         $jobs = \App\Models\Job::selectRaw('count(*) as count, MONTH(created_at) month, YEAR(created_at) year')
             ->where('created_at', '>=', \Carbon\Carbon::now()->subMonths(12))
             ->groupBy('month', 'year')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
-            ->get();
-        return view('dashboards.home');
+            ->pluck('count')->toArray();
+        return view('dashboards.home')->with('jobs', $jobs);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Services\JobRecommendationService;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call( function () {
+            $recommendation = new JobRecommendationService;
+            $recommendation->recommendJobs();
+        })->dailyAt('00:00');  //The job recommendation service will run every day at midnight
     }
 
     /**

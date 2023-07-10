@@ -13,49 +13,94 @@ class JobRecommendationService
 {
     public function recommendJobs()
     {
-        foreach (User::all() as $user) {
-            // Get all jobs
-            $jobs = Job::all();
+        //check if there are users created in less than 24 hrs from now
+        $users = User::where('updated_at', '>=', now()->subHours(24))->get();
+        $jobs = Job::where('updated_at', '>=', now()->subHours(24))->get();
 
-            // Create user's interests vector
-            $userInterests = $user->interests()->pluck('name')->toArray();
-            $userInterestsVector = $this->interestsToVector($userInterests);
+        // dd($users, $jobs);
 
-            // Create user's location vector
-            $userLocation = [$user->country, $user->city];
+        if ($users->isEmpty() && $jobs->isEmpty()) {
+            return;
+        }
 
-
-            $recommendedJobs = [];
-
+        if($users->isNotEmpty()) {
+            foreach ($users as $user) {
+                // Get all jobs
+                $jobs = Job::all();
+    
+                // Create user's interests vector
+                $userInterests = $user->interests()->pluck('name')->toArray();
+                $userInterestsVector = $this->interestsToVector($userInterests);
+    
+                // Create user's location vector
+                $userLocation = [$user->country, $user->city];
+    
+    
+                $recommendedJobs = [];
+    
+                foreach ($jobs as $job) {
+                    // Create job vector
+                    $jobCategories = $job->categories()->pluck('name')->join(' ');
+                    $jobTitle = $job->title . ' ' . $jobCategories;
+                    $jobDescription = $job->description;
+                    $jobLocation = [$job->location];
+                    $jobVector = $this->jobToVector($jobTitle, $jobDescription, $jobLocation);
+    
+                    // Calculate similarity scores
+                    $interestsScore = $this->cosineSimilarity($userInterestsVector, $jobVector['interests']);
+                    $locationScore = $this->cosineSimilarity($userLocation, $jobVector['location']);
+    
+                    // Calculate overall similarity score
+                    $overallScore = ($interestsScore + $locationScore) / 2;
+    
+                    // Save recommendation to database if score is greater than 0.5
+                    if ($overallScore > 0.5) {
+                        $recommendation = JobRecommendation::updateOrCreate(
+                            ['user_id' => $user->id, 'job_id' => $job->id],
+                            ['score' => $overallScore]
+                        );    
+                    }
+                }
+            }
+        } else if ($jobs->isNotEmpty()) {
             foreach ($jobs as $job) {
-                // Create job vector
-                $jobCategories = $job->categories()->pluck('name')->join(' ');
-                $jobTitle = $job->title . ' ' . $jobCategories;
-                $jobDescription = $job->description;
-                $jobLocation = [$job->country, $job->city];
-                $jobVector = $this->jobToVector($jobTitle, $jobDescription, $jobLocation);
-
-                // Calculate similarity scores
-                $interestsScore = $this->cosineSimilarity($userInterestsVector, $jobVector['interests']);
-                $locationScore = $this->cosineSimilarity($userLocation, $jobVector['location']);
-
-                // Calculate overall similarity score
-                $overallScore = ($interestsScore + $locationScore) / 2;
-
-                // Save recommendation to database if score is greater than 0.5
-                if ($overallScore > 0.5) {
-                    $recommendation = new JobRecommendation();
-                    $recommendation->user_id = $user->id;
-                    $recommendation->job_id = $job->id;
-                    $recommendation->score = $overallScore;
-                    $recommendation->save();
-
-                    // Add job to recommended jobs array
-                    $job->score = $overallScore;
-                    $recommendedJobs[] = $job;
+                // Get all jobs
+                $users = User::all();
+    
+                // Create user's interests vector
+                $jobCategories = $job->categories()->pluck('name')->toArray();
+                $jobCategoriesVector = $this->interestsToVector($jobCategories);
+    
+                // Create user's location vector
+                $jobLocation = [$job->location];
+    
+                foreach ($users as $user) {
+                    // Create job vector
+                    $userInterests = $user->interests()->pluck('name')->join(' ');
+                    $userTitle = $user->title . ' ' . $userInterests;
+                    $userDescription = $user->description;
+                    $userLocation = [$user->country, $user->city];
+                    $userVector = $this->jobToVector($userTitle, $userDescription, $userLocation);
+    
+                    // Calculate similarity scores
+                    $interestsScore = $this->cosineSimilarity($jobCategoriesVector, $userVector['interests']);
+                    $locationScore = $this->cosineSimilarity($jobLocation, $userVector['location']);
+    
+                    // Calculate overall similarity score
+                    $overallScore = ($interestsScore + $locationScore) / 2;
+    
+                    // Save recommendation to database if score is greater than 0.5
+                    if ($overallScore > 0.5) {
+                        $recommendation = JobRecommendation::updateOrCreate(
+                            ['user_id' => $user->id, 'job_id' => $job->id],
+                            ['score' => $overallScore]
+                        );
+                    }
                 }
             }
         }
+        
+ 
     }
 
     private function interestsToVector($interestsArray)

@@ -27,4 +27,5 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('categories', CategoryAPIController::class);
     Route::get('jobs/recommended', 'JobController@recommended');
     Route::get('jobs/{job}/recommendations', 'JobController@recommendations');
+    Route::get('jobs_by_user/{user}', 'JobController@jobsByUser');
 });

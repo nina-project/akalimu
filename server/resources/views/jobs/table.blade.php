@@ -24,7 +24,7 @@
             <td>{{ $job->description }}</td>
             <td>{{ $job->location }}</td>
             <td>{{ $job->wage }}</td>
-            <td>{{ $job->posted_by }}</td>
+            <td>{{ $job->postedBy->name }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['jobs.destroy', $job->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
@@ -44,4 +44,7 @@
         @endforeach
         </tbody>
     </table>
+    <div class="p-3 float-right">
+        {{ $jobs->links() }}
+    </div>
 </div>

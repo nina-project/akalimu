@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Field;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
+use App\Models\CategoryJob;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,18 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\FieldCategory::factory(10)->create();
-        \App\Models\Field::factory(100)->create();
+        \App\Models\Category::factory(140)->create();
         \App\Models\User::factory(60)->create();
         \App\Models\Job::factory(200)->create();
 
         $users = User::all();
-        $fields = Field::all();
+        $categories = Category::all();
 
-        $users->each(function ($user) use ($fields) {
+        $users->each(function ($user) use ($categories) {
             $user->interests()->attach(
-                $fields->random(rand(1,12))->pluck('id')->toArray()
+                $categories->random(rand(1,140))->pluck('id')->toArray()
             );
         });
+        \App\Models\JobRecommendation::factory(400)->create();
+        \App\Models\CategoryJob::factory(800)->create();
+
+
+        
     }
 }

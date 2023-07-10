@@ -31,4 +31,7 @@
         @endforeach
         </tbody>
     </table>
+    <div class="p-3 float-right">
+        {{ $users->links() }}
+    </div>
 </div>

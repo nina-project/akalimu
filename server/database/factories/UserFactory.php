@@ -27,7 +27,7 @@ class UserFactory extends Factory
         'country' => $this->faker->country,
         'city' => $this->faker->city,
         'email_verified_at' => $this->faker->date('Y-m-d H:i:s'),
-        'password' => $this->faker->word,
+        'password' => '$2y$10$qTum7ziZPBLJ4/AfU5FNcescOpuDdfb1pctHpsxjpeUKhAGQD87IS',
         'remember_token' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')

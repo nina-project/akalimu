@@ -22,7 +22,7 @@ class UserController extends AppBaseController
     public function index(Request $request)
     {
         /** @var User $users */
-        $users = User::latest()->get();
+        $users = User::latest()->paginate(10);
 
         return view('users.index')
             ->with('users', $users);

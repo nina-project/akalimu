@@ -22,7 +22,7 @@ class CategoryController extends AppBaseController
     public function index(Request $request)
     {
         /** @var Category $categories */
-        $categories = Category::all();
+        $categories = Category::latest()->paginate(10);
 
         return view('categories.index')
             ->with('categories', $categories);

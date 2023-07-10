@@ -5,12 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateJobAPIRequest;
 use App\Http\Requests\API\UpdateJobAPIRequest;
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use Error;
 use Response;
 
-use function GuzzleHttp\json_encode;
 
 /**
  * Class JobController
@@ -64,7 +63,7 @@ class JobController extends AppBaseController
         $job = Job::create($input);
         $job->categories()->attach($categories);
         $jobArray = $job->toArray();
-        $jobArray['categories'] = $categories;
+        $jobArray['categories'] = $job->categories;
 
         return $this->sendResponse($jobArray, 'Job saved successfully');
     }
@@ -82,11 +81,14 @@ class JobController extends AppBaseController
         /** @var Job $job */
         $job = Job::find($id);
 
+
         if (empty($job)) {
             return $this->sendError('Job not found');
         }
+        $jobArray = $job->toArray();
+        $jobArray['categories'] = $job->categories;
 
-        return $this->sendResponse($job->toArray(), 'Job retrieved successfully');
+        return $this->sendResponse($jobArray, 'Job retrieved successfully');
     }
 
     /**
@@ -100,18 +102,18 @@ class JobController extends AppBaseController
      */
     public function update($id, UpdateJobAPIRequest $request)
     {
-        return $this->sendError('Not implemented');
         // /** @var Job $job */
-        // $job = Job::find($id);
+        $job = Job::find($id);
 
-        // if (empty($job)) {
-        //     return $this->sendError('Job not found');
-        // }
+        if (empty($job)) {
+            return $this->sendError('Job not found');
+        }
 
-        // $job->fill($request->all());
-        // $job->save();
+        $job->fill($request->all());
+        $job->categories()->sync($request->categories);
+        $job->save();
 
-        // return $this->sendResponse($job->toArray(), 'Job updated successfully');
+        return $this->sendResponse($job->toArray(), 'Job updated successfully');
     }
 
     /**
@@ -147,6 +149,20 @@ class JobController extends AppBaseController
         
         return $this->sendResponse($recommend_jobs->toArray(), 'Recommended jobs retrieved successfully');
 
+    }
+
+    /**
+     * Get my jobs
+     */
+    public function jobsByUser($user_id)
+    {
+        $user = User::find($user_id);
+        if (empty($user)) {
+            return $this->sendError('User not found');
+        }
+
+        $jobs = Job::where('posted_by', $user_id)->get()->toArray();
+        return $this->sendResponse($jobs, 'Jobs retrieved successfully');
     }
 
     /**
