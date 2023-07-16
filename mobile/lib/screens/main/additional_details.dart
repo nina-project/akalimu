@@ -1,5 +1,6 @@
 import 'package:akalimu/data/local_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/models/category.dart';
@@ -18,7 +19,7 @@ class _AdditionalDetailsState extends State<AdditionalDetails> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
-  Category? categoryValue;
+  List<Category> categoryValues = [];
 
   @override
   void initState() {
@@ -102,41 +103,28 @@ class _AdditionalDetailsState extends State<AdditionalDetails> {
                   ),
                   const SizedBox(height: 20.0),
                   const Text(
-                    'Category',
+                    'Interests',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10.0),
-                  DropdownButtonFormField<Category>(
-                    decoration: const InputDecoration(
-                      labelText: 'Category',
-                      enabledBorder: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 3, color: Color(0xFF163a96)),
-                      ),
-                    ),
-                    value: categoryValue,
-                    onChanged: (newValue) {
+                  MultiSelectDialogField<Category>(
+                    listType: MultiSelectListType.CHIP,
+                    items: categories
+                        .map((e) => MultiSelectItem<Category>(e, e.name))
+                        .toList(),
+                    onConfirm: (values) {
                       setState(() {
-                        categoryValue = newValue;
+                        categoryValues = values;
                       });
                     },
                     validator: (value) {
-                      if (value == null) {
-                        return 'Please select category you would like to belong to';
+                      if (value == null || value.isEmpty) {
+                        return 'Please select at least one of your interests';
                       }
                       return null;
                     },
-                    items: categories
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(e.name),
-                          ),
-                        )
-                        .toList(),
                   ),
                   const SizedBox(height: 40.0),
                   Align(
@@ -169,7 +157,7 @@ class _AdditionalDetailsState extends State<AdditionalDetails> {
       Client userData = currentUserData.copyWith(
         country: _countryController.text,
         city: _cityController.text,
-        categories: categoryValue != null ? [categoryValue!] : [],
+        interests: categoryValues,
         updatedAt: DateTime.now(),
       );
 

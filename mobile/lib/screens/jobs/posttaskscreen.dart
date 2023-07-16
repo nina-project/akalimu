@@ -4,6 +4,7 @@ import 'package:akalimu/data/models/category.dart';
 import 'package:akalimu/data/models/job.dart';
 import 'package:akalimu/data/providers/app_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'job_details_screen.dart';
@@ -16,7 +17,7 @@ class PostTaskPage extends StatefulWidget {
 }
 
 class _PostTaskPageState extends State<PostTaskPage> {
-  Category? categoryValue;
+  List<Category> categories = [];
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
@@ -89,35 +90,23 @@ class _PostTaskPageState extends State<PostTaskPage> {
                             ),
                           ),
                           const SizedBox(height: 10.0),
-                          DropdownButtonFormField<Category>(
-                            decoration: const InputDecoration(
-                              labelText: 'Category',
-                              enabledBorder: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color(0xFF163a96)),
-                              ),
-                            ),
-                            value: categoryValue,
-                            onChanged: (newValue) {
+                          MultiSelectDialogField<Category>(
+                            listType: MultiSelectListType.CHIP,
+                            items: categories
+                                .map(
+                                    (e) => MultiSelectItem<Category>(e, e.name))
+                                .toList(),
+                            onConfirm: (values) {
                               setState(() {
-                                categoryValue = newValue;
+                                categories = values;
                               });
                             },
                             validator: (value) {
-                              if (value == null) {
-                                return 'Please select category';
+                              if (value == null || value.isEmpty) {
+                                return 'Please select at least one of your interests';
                               }
                               return null;
                             },
-                            items: categories
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e.name),
-                                  ),
-                                )
-                                .toList(),
                           ),
                           const SizedBox(height: 20.0),
                           const Text(
@@ -274,7 +263,7 @@ class _PostTaskPageState extends State<PostTaskPage> {
     if (_formKey.currentState!.validate()) {
       Job job = Job(
         title: _titleController.text,
-        categories: categoryValue != null ? [categoryValue!] : [],
+        categories: categories,
         description: _descriptionController.text,
         location: _locationController.text,
         wage: int.parse(_salaryController.text),

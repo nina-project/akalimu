@@ -260,7 +260,7 @@ class AppProvider extends ChangeNotifier {
   Future<Client> updateUserData(Client client) async {
     _isLoading = true;
     notifyListeners();
-    final Client updatedClient = await _clientsAPI.update(client);
+    final Client updatedClient = await _clientsAPI.updateUserProfile(client);
     _userData = updatedClient;
     await _localPreferences.setUserData(updatedClient);
     _isLoading = false;

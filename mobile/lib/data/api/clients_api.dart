@@ -8,6 +8,34 @@ import 'api.dart';
 
 class ClientsAPI {
   final String clientsAPIEndpoint = "$baseAPIUrl/users";
+  final String userAPIEndpoint = "$baseAPIUrl/my-profile";
+
+  Future<Client> getUserProfile() async {
+    try {
+      http.Response response = await getFromEndpoint(userAPIEndpoint);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> map = jsonDecode(response.body);
+        return Client.fromMap(map['data']);
+      } else {
+        return Future.error('Failed to load Client from API');
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<Client> updateUserProfile(Client value) async {
+    try {
+      print(value.toMapForUpdate());
+      http.Response response =
+          await patchToEndpoint(userAPIEndpoint, value.toMapForUpdate());
+      Map<String, dynamic> json = jsonDecode(response.body);
+      return Client.fromMap(json["data"]);
+    } catch (e) {
+      print(e.toString());
+      return Future.error(e);
+    }
+  }
 
   Future<List<Client>> getAll(QueryParams params) async {
     try {

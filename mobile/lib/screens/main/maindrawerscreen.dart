@@ -52,24 +52,25 @@ class _MainDrawerState extends State<MainDrawer> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                (appProvider.userData?.name).toString(),
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              // Text(streamSnapshot.data!['lastname'],
-                              //     style: const TextStyle(fontSize: 22)),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.verified),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              (appProvider.userData?.name).toString(),
+                              style: const TextStyle(
+                                fontSize: 18,
                                 color: Colors.white,
-                                //highlightColor: Colors.white,
                               ),
-                            ]),
+                            ),
+                            // Text(streamSnapshot.data!['lastname'],
+                            //     style: const TextStyle(fontSize: 22)),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.verified),
+                              color: Colors.white,
+                              //highlightColor: Colors.white,
+                            ),
+                          ],
+                        ),
                       ),
                       // Text(
                       //   (user?.phoneNumber).toString(),
@@ -89,7 +90,8 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
                 title: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.pop(context);
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const Profile()));

@@ -8,7 +8,7 @@ class Client {
     this.country,
     required this.email,
     this.phoneNumber,
-    this.categories = const [],
+    this.interests = const [],
     this.emailVerifiedAt,
     required this.id,
     required this.name,
@@ -22,7 +22,7 @@ class Client {
   String? phoneNumber;
   String? city;
   String? country;
-  List<Category> categories;
+  List<Category> interests;
   DateTime? emailVerifiedAt;
   DateTime createdAt;
   DateTime updatedAt;
@@ -33,10 +33,15 @@ class Client {
         createdAt: DateTime.parse(map["created_at"]),
         email: map["email"],
         phoneNumber: map["phone_number"],
-        categories: map["categories"] == null
+        interests: map["interests"] == null
             ? <Category>[]
-            : List<Category>.from(
-                map["categories"].map((x) => Category.fromJson(x))),
+            : List<Category>.from(map["interests"].map((x) {
+                try {
+                  return Category.fromMap(x);
+                } catch (e) {
+                  return Category.fromJson(x);
+                }
+              })),
         emailVerifiedAt: map["email_verified_at"] == null
             ? null
             : DateTime.parse(map["email_verified_at"]),
@@ -51,7 +56,7 @@ class Client {
         "created_at": createdAt.toIso8601String(),
         "email": email,
         "phone_number": phoneNumber,
-        "categories": categories,
+        "interests": interests,
         "email_verified_at":
             emailVerifiedAt == null ? null : emailVerifiedAt!.toIso8601String(),
         "id": id,
@@ -64,7 +69,7 @@ class Client {
         "country": country,
         "email": email,
         "phone_number": phoneNumber,
-        "categories": categories,
+        "interests": interests.map((e) => e.id).toList(),
         "name": name,
         "updated_at": updatedAt.toIso8601String(),
       };
@@ -81,7 +86,7 @@ class Client {
     String? phoneNumber,
     String? city,
     String? country,
-    List<Category>? categories,
+    List<Category>? interests,
     DateTime? emailVerifiedAt,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -93,7 +98,7 @@ class Client {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       city: city ?? this.city,
       country: country ?? this.country,
-      categories: categories ?? this.categories,
+      interests: interests ?? this.interests,
       emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -103,7 +108,7 @@ class Client {
   @override
   String toString() {
     return '''UserData(id: $id, name: $name, email: $email, phone_nunber: $phoneNumber, city: $city, country: $country, 
-    categories: $categories, email_verified_at: $emailVerifiedAt, created_at: $createdAt, updated_at: $updatedAt)''';
+    interests: $interests, email_verified_at: $emailVerifiedAt, created_at: $createdAt, updated_at: $updatedAt)''';
   }
 }
 
