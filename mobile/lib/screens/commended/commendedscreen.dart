@@ -26,8 +26,7 @@ class _CommendedScreenState extends State<CommendedScreen> {
         body: SmartRefresher(
           controller: _refreshController,
           onRefresh: () async {
-            await appProvider.fetchRecommendedJobs();
-
+            await appProvider.fetchUserJobs();
             _refreshController.refreshCompleted();
           },
           child: Builder(builder: (context) {
@@ -35,9 +34,9 @@ class _CommendedScreenState extends State<CommendedScreen> {
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0).copyWith(top: 30),
-                  child: Column(
+                  child: const Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Text(
                         "No jobs recommended at the moment",
                         style: TextStyle(color: Colors.black38),
