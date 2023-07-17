@@ -34,9 +34,12 @@ class UserAPIController extends AppBaseController
             $query->limit($request->get('limit'));
         }
 
-        $users = $query->get();
+        $users = $query->get()->map( function ($user) {
+            $user['interests'] = User::find($user->id)->interests;
+            return $user;
+        });
 
-        return $this->sendResponse($users->toArray(), 'Users retrieved successfully');
+        return $this->sendResponse($users, 'Users retrieved successfully');
     }
 
     /**
@@ -53,8 +56,23 @@ class UserAPIController extends AppBaseController
 
         /** @var User $user */
         $user = User::create($input);
+        $userArray = $user->toArray();
+        $userArray['interests'] = $user->interests;
+        return $this->sendResponse($userArray, 'User saved successfully');
+    }
 
-        return $this->sendResponse($user->toArray(), 'User saved successfully');
+    /**
+     * Display the current User.
+     * GET|HEAD /users/me
+     *
+     * @return Response
+     */
+    public function profile()
+    {
+        $user = auth()->user();
+        $userArray = $user->toArray();
+        $userArray['interests'] = $user->interests;
+        return $this->sendResponse($userArray, 'User retrieved successfully');
     }
 
     /**
@@ -86,10 +104,10 @@ class UserAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateUserAPIRequest $request)
+    public function update(UpdateUserAPIRequest $request)
     {
         /** @var User $user */
-        $user = User::find($id);
+        $user = auth()->user();
 
         if (empty($user)) {
             return $this->sendError('User not found');
@@ -97,8 +115,17 @@ class UserAPIController extends AppBaseController
 
         $user->fill($request->all());
         $user->save();
+        //check if interests exist in request
+        if ($request->input('interests', [])) {
+            //if yes, sync interests
+            $user->interests()->sync($request->input('interests', []));
+        }
 
-        return $this->sendResponse($user->toArray(), 'User updated successfully');
+        $userArray = $user->toArray();
+        $userArray['interests'] = $user->interests;
+
+
+        return $this->sendResponse($userArray, 'User updated successfully');
     }
 
     /**
@@ -123,5 +150,17 @@ class UserAPIController extends AppBaseController
         $user->delete();
 
         return $this->sendSuccess('User deleted successfully');
+    }
+
+    /**
+     * Update interests of the specified User in storage.
+     */
+    public function updateInterests(Request $request)
+    {
+        $user = auth()->user();
+        $user->interests()->sync($request->input('interests', []) ?? []);
+        $userArray = $user->toArray();
+        $userArray['interests'] = $user->interests;
+        return $this->sendResponse($userArray, 'User Interests updated successfully');
     }
 }

@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "jobRecommendation",
-    "dateExported": "2023-06-28T18:55:04.499Z",
+    "dateExported": "2023-07-15T05:59:00.339Z",
     "version": "1.1",
     "folders": [],
     "requests": [
@@ -14,12 +14,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-08T16:10:31.155Z",
-            "modified": "2023-06-27T18:51:33.938Z",
+            "modified": "2023-07-04T11:43:22.952Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"test2@kill.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"email\": \"luella25@example.net\",\n  \"password\": \"password\"\n}",
                 "form": []
             },
             "tests": []
@@ -33,12 +33,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-08T16:10:40.701Z",
-            "modified": "2023-06-10T18:39:04.549Z",
+            "modified": "2023-07-02T22:01:27.076Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\" : \"BOSSA VICENT\",\n  \"email\": \"bossman2@gmail.com\",\n  \"password\": \"pass1234\"\n}",
+                "raw": "{\n  \"name\" : \"SUNDAY BOY\",\n  \"email\": \"sun2@gmail.com\",\n  \"password\": \"pass1234\"\n}",
                 "form": []
             },
             "tests": []
@@ -133,18 +133,17 @@
             "method": "POST",
             "sortNum": 70000,
             "created": "2023-06-10T18:52:10.123Z",
-            "modified": "2023-06-27T18:52:07.489Z",
-            "headers": [
-                {
-                    "name": "Authorization",
-                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg3ODkxODkzLCJleHAiOjE2ODc4OTU0OTMsIm5iZiI6MTY4Nzg5MTg5MywianRpIjoiQllVd2ExWGc0OVR4S093SiIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tQmaRb5OY1bTbuUlHtuNIhGcN-p1rJ4l81Yc8BZPYHA"
-                }
-            ],
+            "modified": "2023-07-02T22:02:42.496Z",
+            "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"House cleaning\",\n  \"categories\" : [1,2,3],\n  \"description\": \"hello clean  my house i am off\",\n  \"location\": \"Bwaise Kampala\",\n  \"wage\": 20000\n}",
+                "raw": "{\n  \"title\": \"Sunday House cleaning\",\n  \"categories\" : [1,2,3],\n  \"description\": \"hello this a Sunday\",\n  \"location\": \"Bwaise Kampala\",\n  \"wage\": 20000\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNjg4MzM1Mjg3LCJleHAiOjE2ODgzMzg4ODcsIm5iZiI6MTY4ODMzNTI4NywianRpIjoibmpWdE1udDhld1d6b3ZaUSIsInN1YiI6IjEzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Ocu78SoG3arD7-QB8495-IjsAgFAc9w6VDMgXHlCkBk"
             },
             "tests": []
         },
@@ -176,11 +175,12 @@
             "method": "PATCH",
             "sortNum": 90000,
             "created": "2023-06-10T19:11:13.237Z",
-            "modified": "2023-06-10T19:19:56.627Z",
+            "modified": "2023-07-15T02:17:11.735Z",
             "headers": [
                 {
-                    "name": "Authorization",
-                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg2NDI0Nzc1LCJleHAiOjE2ODY0MjgzNzUsIm5iZiI6MTY4NjQyNDc3NSwianRpIjoiV2d1V2xBMEdMWDQ3VGpyVyIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vobddsouZuU-1R54saZcTIyeLQEq8w8IoM6AehUjqlw"
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
                 }
             ],
             "params": [],
@@ -209,6 +209,113 @@
             ],
             "params": [],
             "tests": []
+        },
+        {
+            "_id": "c6c70735-ea00-4f1c-87fb-87f720a38af3",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "show a job",
+            "url": "http://localhost:8000/api/v1/jobs/3",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-07-01T19:01:34.392Z",
+            "modified": "2023-07-01T19:03:21.027Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg4MjM4MTM3LCJleHAiOjE2ODgyNDE3MzcsIm5iZiI6MTY4ODIzODEzNywianRpIjoicnRTT1ZManhXTTg4aWdJTyIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Sf-FkAnEmFbqLCVy3r2xZ_QzXCmnE9G-czL0d-7rrkU"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "841a872a-0eba-47a1-81ed-a2003a8f1cdc",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "jobs By User",
+            "url": "http://localhost:8000/api/v1/jobs_by_user/24",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2023-07-04T11:39:32.482Z",
+            "modified": "2023-07-04T11:44:07.833Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg4NDcxMDAyLCJleHAiOjE2ODg0NzQ2MDIsIm5iZiI6MTY4ODQ3MTAwMiwianRpIjoidXkzZ2xJaEtxTWZ5UDhVaSIsInN1YiI6IjYiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.wBlCBEQp8ucwO-3exoA3xAmTBKqJXHCvNaYVl07jx60"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ad536f4b-239e-4b27-a929-5931d2800191",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "My Profile",
+            "url": "localhost:8000/api/v1/my-profile",
+            "method": "GET",
+            "sortNum": 130000,
+            "created": "2023-07-14T06:25:51.766Z",
+            "modified": "2023-07-15T02:15:33.995Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ef10d81f-3dba-4b89-b819-d72c171f3db4",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "UPDATE INTEREST",
+            "url": "localhost:8000/api/v1/update-interests",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2023-07-14T06:44:00.595Z",
+            "modified": "2023-07-14T06:48:45.738Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"interests\": [1,4,5,2] \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ea4106a4-c4ba-48dc-8f87-a4af90298a51",
+            "colId": "f1093aa6-fee7-4bf9-88fc-6e2c7e621c78",
+            "containerId": "",
+            "name": "update user",
+            "url": "http://localhost:8000/api/v1/my-profile",
+            "method": "PATCH",
+            "sortNum": 160000,
+            "created": "2023-07-15T01:50:11.891Z",
+            "modified": "2023-07-15T05:58:28.969Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"country\": \"Uganda\",\n  \"city\": \"Kampala\",\n  \"interests\": [1,2]\n}",
+                "form": []
+            },
+            "tests": []
         }
-    ]
+    ],
+    "settings": {
+        "headers": [
+            {
+                "name": "Content-Type",
+                "value": "application/json"
+            }
+        ],
+        "auth": {
+            "type": "bearer",
+            "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjg5Mzk5ODA4LCJleHAiOjE2ODk0MDM0MDgsIm5iZiI6MTY4OTM5OTgwOCwianRpIjoiT0lpVTFNRXJHUTViZWFzUSIsInN1YiI6IjYiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.vpCyFKHGIqLqkYrAd4GeGWFHAdwUJPAE7daodOSN9P4"
+        }
+    }
 }

@@ -22,7 +22,11 @@ Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
 Route::group(['middleware' => 'jwt.auth'], function () {
-    Route::resource('users', UserAPIController::class);
+    Route::resource('users', UserAPIController::class)->except('update');
+    Route::patch('my-profile', 'UserAPIController@update');
+    Route::get('my-profile', 'UserAPIController@profile');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('update-interests', 'UserAPIController@updateInterests');
     Route::resource('jobs', JobController::class);
     Route::resource('categories', CategoryAPIController::class);
     Route::get('jobs/recommended', 'JobController@recommended');

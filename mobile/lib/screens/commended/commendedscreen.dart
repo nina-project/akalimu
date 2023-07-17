@@ -34,7 +34,7 @@ class _CommendedScreenState extends State<CommendedScreen> {
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0).copyWith(top: 30),
-                  child: const Column(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(

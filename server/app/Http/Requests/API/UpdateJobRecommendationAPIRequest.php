@@ -24,8 +24,9 @@ class UpdateJobRecommendationAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = JobRecommendation::$rules;
+        // $rules = JobRecommendation::$rules;
         
-        return $rules;
+        // return $rules;
+        return [];
     }
 }
